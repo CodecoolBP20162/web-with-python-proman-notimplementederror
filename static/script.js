@@ -14,6 +14,10 @@ $(document).ready(function(){
         console.log(retrievedObject.id);
         $('<div id="lole"></div>').appendTo("#lol");
 
+       $( function() {
+        $( "#sortable" ).sortable();
+        $( "#sortable" ).disableSelection();
+        } );
     });
 
 
@@ -27,6 +31,9 @@ $(document).ready(function(){
 
 });
 
+
+
+    
 
 
 
