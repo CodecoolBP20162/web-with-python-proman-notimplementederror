@@ -1,0 +1,5 @@
+#this file serves as the acces filt to the database with its content the database can authenticate you
+
+#create a parameter.txt
+#In this case tour db name and your username have to be the same
+#Its a one liner with your user and db name. This two must be the same
