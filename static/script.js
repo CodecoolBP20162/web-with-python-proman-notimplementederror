@@ -1,18 +1,22 @@
 $(document).ready(function(){
     var count_id=0;
+
+    for(i in localStorage){
+        count_id++;
+        var retrievedObject = localStorage.getItem(i);
+        retrievedObject=JSON.parse(retrievedObject);
+        $('<div id="lole"><label></label></div>').text(retrievedObject.id).appendTo("#lol");
+    }
+
+
     $('#sonka').click(function(){
 
         //var text=document.getElementById('sonkisz').value;
         var text=$('#sonkisz').val();
         console.log(text);
         var board = new Boards(text);
-
         localStorage.setItem(board.id, JSON.stringify(board));
-        var retrievedObject = localStorage.getItem('text');
-        console.log('retrievedObject: ', JSON.parse(retrievedObject));
-        retrievedObject=JSON.parse(retrievedObject);
-        console.log(retrievedObject.id);
-        $('<div id="lole"></div>').appendTo("#lol");
+        $('<div id="lole"><label></label></div>').text(board.id).appendTo("#lol");
 
     });
 
