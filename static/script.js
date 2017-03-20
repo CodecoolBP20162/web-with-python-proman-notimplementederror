@@ -13,13 +13,7 @@ $(document).ready(function(){
         retrievedObject=JSON.parse(retrievedObject);
         console.log(retrievedObject.id);
         $('<div id="lole"></div>').appendTo("#lol");
-
-       $( function() {
-        $( "#sortable" ).sortable();
-        $( "#sortable" ).disableSelection();
-        } );
-    });
-
+        });
 
 
     function Boards(title){
@@ -28,6 +22,8 @@ $(document).ready(function(){
         this.cards=[];
 
     };
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
 
 });
 
