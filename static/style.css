@@ -1,17 +1,22 @@
+
 #sortable { 
     list-style-type: none; 
     margin: auto;
     padding: 0; 
     width: 80%;
     
+    
+    
     }
 #sortable li { 
-    margin: 3px 3px 3px 0; 
+    margin: 1em; 
     padding: 1px; 
     float: left; 
     width: 250px; 
     height: 200px; 
-    font-size: 4em; 
-    text-align: center; 
+    font-size: 2em; 
+    text-align: left;
+    text-indent: 1em;
+    border-radius: 5px;
     }
 
