@@ -3,27 +3,44 @@ $(document).ready(function(){
 
 
     for(i in localStorage){
-        count_id++;
-        var retrievedObject = localStorage.getItem(i);
-        retrievedObject=JSON.parse(retrievedObject);
-        $('<div id="lole"><label></label></div>').text(retrievedObject.id).appendTo("#lol");
+        var n = i.substring(0, 1);
+        console.log(n)
+        if (n !== "t") {
+            count_id++;
+            var retrievedObject = localStorage.getItem(i);
+            retrievedObject=JSON.parse(retrievedObject);
+            $('<div id="board"><label></label></div>').text(retrievedObject.title).appendTo("#boards");
+        }
+
+    }
+
+    if (!String.prototype.format) {
+        String.prototype.format = function () {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function (match, number) {
+                return typeof args[number] != 'undefined'
+                    ? args[number]
+                    : match
+                    ;
+            });
+        };
     }
 
 
-    $('#sonka').click(function(){
+    $('#newboard-button').click(function(){
 
         //var text=document.getElementById('sonkisz').value;
-        var text=$('#sonkisz').val();
+        var text=$('#newboard-input').val();
         console.log(text);
         var board = new Boards(text);
         localStorage.setItem(board.id, JSON.stringify(board));
-        $('<button id="lol"><label></label></button>').text(board.title).appendTo("#lol");
+        $('<div id="board"></div>').text(board.title).appendTo("#boards");
 
     });
 
-    $('#lol').click(function(){
-        alert("hello");
-        $.get("tasks.html");
+    $('#boards').click(function(){
+        var data = this.id;
+        alert(data);
     });
 
 
