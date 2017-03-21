@@ -1,42 +1,52 @@
-
-.entry-row{
-    height: auto;
-
-}
-
-
-#sonka{
-    display: none;
-}
-
-    #intro.active {
-        display:block;
-        z-index: -1; position:relative;
-    }
-
-    #intro .close {
-        display: none;
-    }
-
 @font-face {
   font-family: "Raleway";
   src: url(https://fonts.googleapis.com/css?family=Raleway);
 }
 
 *{margin:0; padding:0;}
-body{background-image: url("../images/background.png");}
-a{text-decoration:none; color:black;}
+a{text-decoration:none; color: black;}
+a:hover{text-decoration: none; color: black;}
 
 div {
+    display: block;
+    position: relative;
     margin: 0 auto;
-    width: 70%;
     font-face: "Raleway";
     text-align: center;
-    padding:5px;
-    border:1px solid black;
-    alignment:center;
-    width:600px;
-    margin:auto;
+    color: white;
+}
+
+/*••••••••••••SCROLLING••••••••••••*/
+div[id=group]{
+    z-index: 3;
+    width: 80%;
+}
+
+.parallax {
+    overflow-x: visible;
+    overflow-y: auto;
+    perspective: 2000px;
+}
+.parallax_layer{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
+.parallax_layer--base{
+    transform:translateZ(0px);
+    z-index: 4;
+}
+.parallax_layer--back{
+    transform: translateZ(-300px);
+    z-index: 1;
+    background-image: url("../images/bg.png");
+    background-size: 100%;
+}
+.parallax_group {
+    position: relative;
+    height: 100vh;
 }
 
 /*••••••••••••HEADER••••••••••••*/
@@ -45,20 +55,23 @@ div[id=title] {
     margin-top: 30px;
     font-weight: 200;
     font-size: 70px;
-    color:black;
+    color: black
     }
 
 /*••••••••••••BOARDS••••••••••••*/
 
 div[id=board_container] {
-    color:black;
+    margin-top: 100px;
     }
 
-#row entry-row{
-    width:600px;
-    margin:0 auto;
+table{
+    border-collapse: separate;
+    border-spacing: 13px 13px;
 }
 
+td{
+    vertical-align: top;
+}
 
 h2{
     text-align:center;
@@ -67,16 +80,69 @@ h2{
     margin: 0 0 12px 0;
   }
 
+.article {
+    display: block;
+    margin: 0 0 13px 0;
+    padding: 10px;
+    background-color: transparent;
+    border: 3px solid black;
+    border-radius: 3px;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.4);
+    transition: all 220ms;
+}
+
+.article:hover {
+    box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.4);
+    transform : translateY(-3px);
+    transition:all 220ms;
+}
 
 img{
     display:block;
     width: 100%;
     margin: 0 0 24px 0;
-  }
+}
 
+/*••••••••••••BUTTONS•••••••••••*/
+
+.mod {
+    display: inline-block;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    }
+
+.mod:hover {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    }
+
+.add{
+    position: fixed;
+    bottom: 150px;
+    right: 50px;
+    width: 50px;
+}
+.edit{
+    position: fixed;
+    bottom: 90px;
+    right: 50px;
+    width: 50px;
+}
+.del{
+    position: fixed;
+    bottom: 30px;
+    right: 50px;
+    width: 50px;
+}
 
 /*••••••••••••FOOTER••••••••••••*/
 
 div[id=footer] {
     margin-top: 200px;
+    margin-bottom: 200px;
+    color: black;
     }
