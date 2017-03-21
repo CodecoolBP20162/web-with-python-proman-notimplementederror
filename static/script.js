@@ -1,26 +1,34 @@
 $(document).ready(function(){
     var local_obj=[];
     var click=true;
+    var count_idd=0;
 
     $('#intro').hide();
     var count_id=0;
-    $('<div class="row">').appendTo("board_container");
     for(i in localStorage){
         var retrievedObject = localStorage.getItem(i);
         retrievedObject=JSON.parse(retrievedObject);
         local_obj.push(retrievedObject);
-        $('<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"><button></button></div>').text(retrievedObject.title).appendTo("#board_container");
+        $('<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"><button></button></div>').text(retrievedObject.title).appendTo(".row");
         count_id++;
     }
 
 
-    $('#sonka').click(function(){
-        var text=$('#sonkisz').val();
-        var board = new Boards(text);
+    $('#newboard-button').click(function(){
+        count_idd++;
+        var text=$('#newboard-input').val();
+        if(text!=""){
+            if (count_idd==1){
+        var board = new Boards(text,["sonka","sali","lol"]);}
+        else if(count_idd==2){
+                var board = new Boards(text,["sdfsfdaf","dsfadf","dsfadf"]);
+            }
         local_obj.push(board);
         localStorage.setItem(board.id, JSON.stringify(board));
-        $('<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ board.id+'"></div>').text(board.title).appendTo("#board_container");
+        $('<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ board.id+'"></div>').text(board.title).appendTo(".row");
+     }
     });
+
 
     $('[id^="bc"]').live('click',function(){
         obj_id=this.id.toString();
@@ -30,22 +38,47 @@ $(document).ready(function(){
             console.log("local : " + local_obj[i].id)
            if(local_obj[i].id.toString()===obj_id) {
                console.log(local_obj[i])
-               for(var j=0;j<local_obj[i].cards.length;j++){
+               if(!click){
+                   $('div').remove('#sonka')
+               $('.row').after($('<div id="sonka"><button id="card_add" class="' + obj_id+ '">Create Card!</button><input type="text" id="card_text" ></div>'));
+
+               for(var j=0;j<local_obj[i].cards.length;j++) {
                    console.log(j);
                    console.log(local_obj[i].cards[j])
-                $('<div id="x">  <h1>' + local_obj[i].cards[j] + '</h1> </div>').appendTo("#intro");
+                   $('#sonka').append($('<div id="x">  <h1>' + local_obj[i].cards[j] + '</h1> </div>'));
+                   //$('.row').after($('<div id="x">  <h1>' + local_obj[i].cards[j] + '</h1> </div>'));
+               }
                }
            }
        }
-       $('#intro').toggle();
+
+       //$("#sonka").slideToggle("slow");
+
+       $('#sonka').slideToggle('slow');
        click=!click;
+       if(click){
+       //$('div').remove('#x');
+
+           }
+    });
+
+
+    $('#card_add').live('click',function () {
+        var card=$('#card_text').val();
+        $('#sonka').append($('<div id="x">  <h1>' + card + '</h1> </div>'));
+        var retrievedObject = localStorage.getItem(this.getAttribute('class'));
+        retrievedObject=JSON.parse(retrievedObject);
+        retrievedObject.cards.push(card);
+        localStorage.setItem(retrievedObject.id, JSON.stringify(retrievedObject));
+
 
     });
 
-    function Boards(title){
+
+    function Boards(title,cards){
         this.id=count_id++;
         this.title=title;
-        this.cards=["sonka","sali","lol"];
+        this.cards=cards;
     };
 });
 

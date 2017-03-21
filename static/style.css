@@ -1,18 +1,17 @@
 
-div {
-    background-color: #2b542c;
+.entry-row{
+    height: auto;
 
-    border: 10px solid black;
 }
 
 
+#sonka{
+    display: none;
+}
+
     #intro.active {
-        -moz-transform: translateY(0);
-        -webkit-transform: translateY(0);
-        -ms-transform: translateY(0);
-        transform: translateY(0);
-        opacity: 1;
         display:block;
+        z-index: -1; position:relative;
     }
 
     #intro .close {
@@ -29,12 +28,10 @@ body{background-image: url("../images/background.png");}
 a{text-decoration:none; color:black;}
 
 div {
-    position: relative;
     margin: 0 auto;
     width: 80%;
     font-face: "Raleway";
     text-align: center;
-    color: black;
 }
 
 /*••••••••••••HEADER••••••••••••*/
@@ -69,21 +66,6 @@ h2{
     margin: 0 0 12px 0;
   }
 
-.article {
-    display: block;
-    margin: 0 0 20px 0;
-    padding: 12px;
-    background: #c9c9c9;
-    border-radius: 3px;
-    box-shadow: 0px 1px 2px 0px #333333;
-    transition: all 220ms;
-}
-
-.article:hover {
-    box-shadow: 0px 2px 3px 1px #333333;
-    transform : translateY(-5px);
-    transition:all 220ms;
-}
 
 img{
     display:block;
