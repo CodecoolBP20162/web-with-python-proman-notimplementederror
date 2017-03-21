@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-    var $article = document.getElementById('intro');
     var local_obj=[];
     var click=true;
 
@@ -11,35 +10,40 @@ $(document).ready(function(){
         var retrievedObject = localStorage.getItem(i);
         retrievedObject=JSON.parse(retrievedObject);
         local_obj.push(retrievedObject);
-        console.log(retrievedObject);
-            $('<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4"><button></button></div>').text(retrievedObject.title).appendTo("body");
+        $('<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"><button></button></div>').text(retrievedObject.title).appendTo("#board_container");
         count_id++;
     }
 
-    $('</div>').appendTo("#board_container");
 
     $('#sonka').click(function(){
         var text=$('#sonkisz').val();
         var board = new Boards(text);
         local_obj.push(board);
         localStorage.setItem(board.id, JSON.stringify(board));
-        $('<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="'+ board.id+'"></div>').text(board.title).appendTo("body");
+        $('<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ board.id+'"></div>').text(board.title).appendTo("#board_container");
     });
 
-    $('div').live('click',function(){
+    $('[id^="bc"]').live('click',function(){
+        obj_id=this.id.toString();
+        obj_id=obj_id.substr(2)
        for(var i=0;i<local_obj.length;i++) {
-           if(local_obj[i].id==this.id) {
+            console.log("obj : "  + obj_id);
+            console.log("local : " + local_obj[i].id)
+           if(local_obj[i].id.toString()===obj_id) {
+               console.log(local_obj[i])
                for(var j=0;j<local_obj[i].cards.length;j++){
-                $('<div id="new_div">  <h1>' + local_obj[i].cards[j] + '</h1> </div>').appendTo("#intro");
+                   console.log(j);
+                   console.log(local_obj[i].cards[j])
+                $('<div id="x">  <h1>' + local_obj[i].cards[j] + '</h1> </div>').appendTo("#intro");
                }
            }
        }
        $('#intro').toggle();
        click=!click;
-       console.log(click);
-       if(!click){
-           $('#new_div').remove();
-       }
+       //if(!click){
+
+           //$('#new_div').remove();
+       //}
 
     });
 
