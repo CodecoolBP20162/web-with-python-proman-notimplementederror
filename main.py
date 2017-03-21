@@ -8,9 +8,9 @@ app.config.from_object(__name__)
 def home_menu():
     return render_template('index.html')
 
-@app.route('/cards')
+@app.route('/proba')
 def proba():
-    return render_template('cards.html')
+    return render_template('proba.html')
 
 
 if __name__ == "__main__":
