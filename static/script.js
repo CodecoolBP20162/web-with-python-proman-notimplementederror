@@ -13,13 +13,13 @@ $(document).ready(function(){
         count_id++;
     }
 
-
     $('#newboard-button').click(function(){
         count_idd++;
         var text=$('#newboard-input').val();
         if(text!=""){
             if (count_idd==1){
-        var board = new Boards(text,["sonka","sali","lol"]);}
+        var board = new Boards(text,["sonka","sali","lol"]);
+            }
         else if(count_idd==2){
                 var board = new Boards(text,["sdfsfdaf","dsfadf","dsfadf"]);
             }
@@ -28,7 +28,6 @@ $(document).ready(function(){
         $('<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ board.id+'"></div>').text(board.title).appendTo(".row");
      }
     });
-
 
     $('[id^="bc"]').live('click',function(){
         obj_id=this.id.toString();
@@ -40,28 +39,19 @@ $(document).ready(function(){
                console.log(local_obj[i])
                if(!click){
                    $('div').remove('#sonka')
-               $('.row').after($('<div id="sonka"><button id="card_add" class="' + obj_id+ '">Create Card!</button><input type="text" id="card_text" ></div>'));
-
+               $(this).after($('<div id="sonka"><button id="card_add" class="' + obj_id+ '">Create Card!</button><input type="text" id="card_text" ></div>'));
                for(var j=0;j<local_obj[i].cards.length;j++) {
                    console.log(j);
                    console.log(local_obj[i].cards[j])
                    $('#sonka').append($('<div id="x">  <h1>' + local_obj[i].cards[j] + '</h1> </div>'));
-                   //$('.row').after($('<div id="x">  <h1>' + local_obj[i].cards[j] + '</h1> </div>'));
                }
                }
            }
        }
 
-       //$("#sonka").slideToggle("slow");
-
        $('#sonka').slideToggle('slow');
        click=!click;
-       if(click){
-       //$('div').remove('#x');
-
-           }
     });
-
 
     $('#card_add').live('click',function () {
         var card=$('#card_text').val();
@@ -70,10 +60,7 @@ $(document).ready(function(){
         retrievedObject=JSON.parse(retrievedObject);
         retrievedObject.cards.push(card);
         localStorage.setItem(retrievedObject.id, JSON.stringify(retrievedObject));
-
-
     });
-
 
     function Boards(title,cards){
         this.id=count_id++;
