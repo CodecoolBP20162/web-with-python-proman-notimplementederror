@@ -20,10 +20,7 @@
     border-radius: 5px;
     }*/
 
-@font-face {
-  font-family: "Raleway";
-  src: url(https://fonts.googleapis.com/css?family=Raleway);
-}
+
 
 *{margin:0; padding:0;}
 body{background-image: url("../images/background.png");}
@@ -33,9 +30,10 @@ div {
     position: relative;
     margin: 0 auto;
     width: 80%;
-    font-face: "Raleway";
+    font-family: "Raleway";
+    font-weight: 200;
     text-align: center;
-    color: white;
+    color: black;
 }
 
 /*••••••••••••HEADER••••••••••••*/
