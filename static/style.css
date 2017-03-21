@@ -1,4 +1,10 @@
 
+div {
+    background-color: #2b542c;
+
+    border: 10px solid black;
+}
+
 
     #intro.active {
         -moz-transform: translateY(0);

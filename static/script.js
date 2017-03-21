@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     var local_obj=[];
     var click=true;
 
@@ -40,10 +39,6 @@ $(document).ready(function(){
        }
        $('#intro').toggle();
        click=!click;
-       //if(!click){
-
-           //$('#new_div').remove();
-       //}
 
     });
 
@@ -52,7 +47,6 @@ $(document).ready(function(){
         this.title=title;
         this.cards=["sonka","sali","lol"];
     };
-
 });
 
 

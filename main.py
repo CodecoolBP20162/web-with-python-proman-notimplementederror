@@ -8,6 +8,10 @@ app.config.from_object(__name__)
 def home_menu():
     return render_template('index.html')
 
+@app.route('/tasks')
+def tasks():
+    return render_template('tasks.html')
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',debug=True)
