@@ -9,7 +9,7 @@ $(document).ready(function(){
         var retrievedObject = localStorage.getItem(i);
         retrievedObject=JSON.parse(retrievedObject);
         local_obj.push(retrievedObject);
-        strng='<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"><p id="image_"><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>'+ retrievedObject.title+ '</p></div>';
+        strng='<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"></p><p id=title>'+ retrievedObject.title+ '</p></div>';
         $(strng).appendTo(".row");
         count_id++;
     }
@@ -56,6 +56,12 @@ $(document).ready(function(){
         retrievedObject=JSON.parse(retrievedObject);
         retrievedObject.cards.push(card);
         localStorage.setItem(retrievedObject.id, JSON.stringify(retrievedObject));
+    });
+
+
+    $('#add').click(function(){
+       $('#input_fields').toggle();
+
     });
 
     function Boards(title){

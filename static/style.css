@@ -36,14 +36,13 @@ body {
 a{text-decoration:none; color:black;}
 
 div {
-    margin: 0 auto;
+    margin: 10px auto;
     font-face: "Raleway";
     text-align: center;
     padding:5px;
     border:1px solid black;
     alignment:center;
     width:600px;
-    margin:auto;
 }
 
 div[id=board_container] {
@@ -111,3 +110,29 @@ div[id=footer] {
     margin-top: 200px;
     }
 
+#add {
+    border: none;
+    background-image: url("add.png");
+    position: fixed;
+    bottom: 70px;
+    right: 100px;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+}
+
+#input_fields{
+    position: fixed;
+    bottom: 230px;
+    right: 180px;
+    width: 50px;
+    height: 70px;
+    display: none;
+}
+
+#inputs{
+        border:1px solid black;
+    display: block;
+    width:200px;
+
+}
