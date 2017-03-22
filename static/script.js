@@ -9,24 +9,20 @@ $(document).ready(function(){
         var retrievedObject = localStorage.getItem(i);
         retrievedObject=JSON.parse(retrievedObject);
         local_obj.push(retrievedObject);
-        $('<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"><button></button></div>').text(retrievedObject.title).appendTo(".row");
+        strng='<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"><p id="image_"><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>'+ retrievedObject.title+ '</p></div>';
+        $(strng).appendTo(".row");
         count_id++;
     }
 
     $('#newboard-button').click(function(){
         count_idd++;
         var text=$('#newboard-input').val();
-        if(text!=""){
-            if (count_idd==1){
-        var board = new Boards(text,["sonka","sali","lol"]);
-            }
-        else if(count_idd==2){
-                var board = new Boards(text,["sdfsfdaf","dsfadf","dsfadf"]);
-            }
+        var board = new Boards(text);
         local_obj.push(board);
         localStorage.setItem(board.id, JSON.stringify(board));
-        $('<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ board.id+'"></div>').text(board.title).appendTo(".row");
-     }
+        strng='<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"><p><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>Title</p></div>';
+        $(strng).text(board.title).appendTo(".row");
+
     });
 
     $('[id^="bc"]').live('click',function(){
@@ -62,10 +58,10 @@ $(document).ready(function(){
         localStorage.setItem(retrievedObject.id, JSON.stringify(retrievedObject));
     });
 
-    function Boards(title,cards){
+    function Boards(title){
         this.id=count_id++;
         this.title=title;
-        this.cards=cards;
+        this.cards=["sonka","sali","kapi","kalap"]
     };
 });
 

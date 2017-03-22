@@ -4,6 +4,15 @@
 
 }
 
+body {
+    background-image: url("bg.png");
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-repeat: repeat;
+    background-color: lightgrey;
+}
 
 #sonka{
     display: none;
@@ -24,12 +33,10 @@
 }
 
 *{margin:0; padding:0;}
-body{background-image: url("../images/background.png");}
 a{text-decoration:none; color:black;}
 
 div {
     margin: 0 auto;
-    width: 70%;
     font-face: "Raleway";
     text-align: center;
     padding:5px;
@@ -38,6 +45,10 @@ div {
     width:600px;
     margin:auto;
 }
+
+div[id=board_container] {
+    margin-top: 100px;
+    }
 
 /*••••••••••••HEADER••••••••••••*/
 
@@ -52,7 +63,26 @@ div[id=title] {
 
 div[id=board_container] {
     color:black;
+    border-collapse: separate;
+    border-spacing: 13px 13px;
+        margin-right: 3px;
+    margin:auto;
+    width:700px;
+    padding: 3px;
     }
+
+div[id=sonka]{
+    margin:2px auto;
+}
+
+[id^=bc]{
+    border-color: #2b542c;
+    margin:2px auto;
+    margin-right:3px;
+    width:32.9%;
+    display: block;
+
+}
 
 #row entry-row{
     width:600px;
@@ -80,3 +110,4 @@ img{
 div[id=footer] {
     margin-top: 200px;
     }
+
