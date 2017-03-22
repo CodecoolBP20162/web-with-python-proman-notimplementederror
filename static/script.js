@@ -26,20 +26,25 @@ $(document).ready(function(){
     });
 
     $('[id^="bc"]').live('click',function(){
+        var $current=$(this);
         obj_id=this.id.toString();
         obj_id=obj_id.substr(2)
        for(var i=0;i<local_obj.length;i++) {
-            console.log("obj : "  + obj_id);
-            console.log("local : " + local_obj[i].id)
            if(local_obj[i].id.toString()===obj_id) {
-               console.log(local_obj[i])
-               if(!click){
+               $("div").not($(this)).removeClass('blur')
+               if(click){
+                   console.log(click)
                    $('div').remove('#sonka')
+                   $("div").not($(this)).removeClass('blur')
+               $("div").not($(this)).addClass('blur');
+                   $(this).addClass('notblur');
+               $(this).removeClass('blur');
+               $current.removeClass('blur');
+
                $(this).after($('<div id="sonka"><button id="card_add" class="' + obj_id+ '">Create Card!</button><input type="text" id="card_text" ></div>'));
+               $('#sonka').append($('<div id="x"><div id="done"></div><div id="in_progress"></div><div id="review"></div><div id="new"></h1> </div></div>'));
                for(var j=0;j<local_obj[i].cards.length;j++) {
-                   console.log(j);
-                   console.log(local_obj[i].cards[j])
-                   $('#sonka').append($('<div id="x">  <h1>' + local_obj[i].cards[j] + '</h1> </div>'));
+                   $("#new").append('<h1>' + local_obj[i].cards[j] + '</h1>');
                }
                }
            }
@@ -69,6 +74,10 @@ $(document).ready(function(){
         this.title=title;
         this.cards=["sonka","sali","kapi","kalap"]
     };
+
+
+
+
 });
 
 
