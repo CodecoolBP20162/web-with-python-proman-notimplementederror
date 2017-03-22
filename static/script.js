@@ -42,9 +42,9 @@ $(document).ready(function(){
                $current.removeClass('blur');
 
                $(this).after($('<div id="sonka"><button id="card_add" class="' + obj_id+ '">Create Card!</button><input type="text" id="card_text" ></div>'));
-               $('#sonka').append($('<div id="x"><div id="done"></div><div id="in_progress"></div><div id="review"></div><div id="new"></h1> </div></div>'));
+               $('#sonka').append($('<table id="x"><tr id="status"><th>Done</th><th>In Progress</th><th>Review</th><th>New</th></h1> </tr></table>'));
                for(var j=0;j<local_obj[i].cards.length;j++) {
-                   $("#new").append('<h1>' + local_obj[i].cards[j] + '</h1>');
+                   $("#x").append('<tr><td></td><td></td><td></td><td><p>' + local_obj[i].cards[j] + '<br></p></td></tr>');
                }
                }
            }
