@@ -6,6 +6,7 @@
 *{margin:0; padding:0;}
 a{text-decoration:none; color: black;}
 a:hover{text-decoration: none; color: black;}
+body {background-image: url(../images/bg.png);}
 
 div {
     display: block;
@@ -14,39 +15,6 @@ div {
     font-face: "Raleway";
     text-align: center;
     color: white;
-}
-
-/*••••••••••••SCROLLING••••••••••••*/
-div[id=group]{
-    z-index: 3;
-    width: 80%;
-}
-
-.parallax {
-    overflow-x: visible;
-    overflow-y: auto;
-    perspective: 2000px;
-}
-.parallax_layer{
-    position: absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-}
-.parallax_layer--base{
-    transform:translateZ(0px);
-    z-index: 4;
-}
-.parallax_layer--back{
-    transform: translateZ(-300px);
-    z-index: 1;
-    background-image: url("../images/bg.png");
-    background-size: 100%;
-}
-.parallax_group {
-    position: relative;
-    height: 100vh;
 }
 
 /*••••••••••••HEADER••••••••••••*/
@@ -62,6 +30,7 @@ div[id=title] {
 
 div[id=board_container] {
     margin-top: 100px;
+    width: 80%;
     }
 
 table{
@@ -113,6 +82,10 @@ img{
     transition-duration: 0.3s;
     -webkit-transition-property: transform;
     transition-property: transform;
+
+    position:fixed;
+    right: 50px;
+    width: 50px;
     }
 
 .mod:hover {
@@ -120,29 +93,13 @@ img{
     transform: scale(1.1);
     }
 
-.add{
-    position: fixed;
-    bottom: 150px;
-    right: 50px;
-    width: 50px;
-}
-.edit{
-    position: fixed;
-    bottom: 90px;
-    right: 50px;
-    width: 50px;
-}
-.del{
-    position: fixed;
-    bottom: 30px;
-    right: 50px;
-    width: 50px;
-}
+.add {bottom: 150px;}
+.edit{bottom: 90px;}
+.del{bottom: 30px;}
 
 /*••••••••••••FOOTER••••••••••••*/
 
 div[id=footer] {
     margin-top: 200px;
-    margin-bottom: 200px;
     color: black;
     }
