@@ -68,9 +68,6 @@ $(document).ready(function () {
        click=!click;
     });
 
-    
-    console.log(somearray)
-    });
 
     $('#card_add').live('click',function () {
         var card=$('#card_text').val();
