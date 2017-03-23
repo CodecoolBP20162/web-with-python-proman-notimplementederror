@@ -86,6 +86,7 @@ img{
     position:fixed;
     right: 50px;
     width: 50px;
+    height: 50px;
     }
 
 .mod:hover {
@@ -93,13 +94,12 @@ img{
     transform: scale(1.1);
     }
 
-.add {bottom: 150px;}
-.edit{bottom: 90px;}
-.del{bottom: 30px;}
+.up{bottom: 110px;}
+.add{bottom: 50px;}
 
 /*••••••••••••FOOTER••••••••••••*/
 
 div[id=footer] {
-    margin-top: 200px;
+    margin-top: 50px;
     color: black;
     }
