@@ -1,21 +1,55 @@
+.entry-row{
+    height: auto;
+
+}
+
+body {
+    background-image: url("bg.png");
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-repeat: repeat;
+    background-color: lightgrey;
+}
+
+#sonka{
+    display: none;
+}
+
+    #intro.active {
+        display:block;
+        z-index: -1; position:relative;
+    }
+
+    #intro .close {
+        display: none;
+    }
+
 @font-face {
   font-family: "Raleway";
   src: url(https://fonts.googleapis.com/css?family=Raleway);
 }
 
 *{margin:0; padding:0;}
-a{text-decoration:none; color: black;}
+
+a{text-decoration:none; color:black;}
 a:hover{text-decoration: none; color: black;}
-body {background-image: url(../images/bg.png);}
 
 div {
-    display: block;
-    position: relative;
-    margin: 0 auto;
+    margin: 10px auto;
     font-face: "Raleway";
     text-align: center;
-    color: white;
+    padding:5px;
+    border:1px solid black;
+    alignment:center;
+    width:600px;
+
 }
+
+div[id=board_container] {
+    margin-top: 100px;
+    }
 
 /*••••••••••••HEADER••••••••••••*/
 
@@ -29,8 +63,30 @@ div[id=title] {
 /*••••••••••••BOARDS••••••••••••*/
 
 div[id=board_container] {
-    margin-top: 100px;
-    width: 80%;
+    color:black;
+    border-collapse: separate;
+    border-spacing: 13px 13px;
+        margin-right: 3px;
+    margin:auto;
+    width:700px;
+    padding: 3px;
+    }
+
+div[id=sonka]{
+    margin:2px auto;
+}
+
+[id^=bc]{
+    border-color: #2b542c;
+    margin:2px auto;
+    margin-right:3px;
+    width:32.9%;
+    display: block;
+}
+
+#row entry-row{
+    width:600px;
+    margin:0 auto;
     }
 
 table{
@@ -103,3 +159,51 @@ div[id=footer] {
     margin-top: 200px;
     color: black;
     }
+
+#add {
+    border: none;
+    background-image: url("add.png");
+    position: fixed;
+    bottom: 70px;
+    right: 100px;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+}
+
+#input_fields{
+    position: fixed;
+    bottom: 230px;
+    right: 180px;
+    width: 50px;
+    height: 70px;
+    display: none;
+}
+
+#inputs{
+        border:1px solid black;
+    display: block;
+    width:200px;
+
+}
+
+
+.blur{
+	text-shadow: 0px 0px 10px rgba(51, 51, 51, 0.9);
+	color: rgba(51, 51, 51, 0);
+	opacity: 0.5;
+}
+
+table{
+    border:1px solid black;
+        text-align: center;
+    border-spacing: 10px;
+    margin:0 auto;
+}
+tr td{
+    border:1px solid black;
+    text-align: center;
+    border-spacing: 10px;
+}
+
+
