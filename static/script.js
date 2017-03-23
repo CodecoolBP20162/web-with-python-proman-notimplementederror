@@ -113,7 +113,7 @@ $(document).ready(function () {
 
     function editableTextBlurred() {
         var html = $(this).val();
-        var viewableText = $("<div>");
+        var viewableText = $("<li id='li1'>");
         viewableText.html(html);
         $(this).replaceWith(viewableText);
         $(viewableText).click(divClicked);
