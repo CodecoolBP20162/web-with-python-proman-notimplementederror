@@ -58,7 +58,7 @@ $(document).ready(function () {
                $(this).after($('<div id="sonka"><button id="card_add" class="' + obj_id+ '">Create Card!</button><input type="text" id="card_text" ></div>'));
                $('#sonka').append($('<table id="x"><tr id="status"><th>Done</th><th>In Progress</th><th>Review</th><th>New</th> </tr></table>'));
                for(var j=0;j<local_obj[i].cards.length;j++) {
-                   $("#x").append('<tr><td></td><td></td><td></td><td><p>' + local_obj[i].cards[j] + '<br></p></td></tr>');
+                   $("#x").append('<tr><td></td><td></td><td></td><td><p>' + local_obj[i].cards[j].title + '<br></p></td></tr>');
                }
                }
            }
