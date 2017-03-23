@@ -39,10 +39,9 @@ body {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-repeat: repeat;
-    background-color: lightgrey;
 }
 
-#sonka{
+#card_body{
     display: none;
 }
 
@@ -70,15 +69,10 @@ div {
     font-face: "Raleway";
     text-align: center;
     padding:5px;
-    border:1px solid black;
     alignment:center;
     width:600px;
 
 }
-
-div[id=board_container] {
-    margin-top: 100px;
-    }
 
 /*••••••••••••HEADER••••••••••••*/
 
@@ -92,26 +86,20 @@ div[id=title] {
 /*••••••••••••BOARDS••••••••••••*/
 
 div[id=board_container] {
+    margin-top: 100px;
     color:black;
     border-collapse: separate;
     border-spacing: 13px 13px;
-        margin-right: 3px;
+    margin-right: 3px;
     margin:auto;
-    width:700px;
+    width:80%;
     padding: 3px;
     }
 
-div[id=sonka]{
+div[id=card_body]{
     margin:2px auto;
 }
 
-[id^=bc]{
-    border-color: #2b542c;
-    margin:2px auto;
-    margin-right:3px;
-    width:32.9%;
-    display: block;
-}
 
 #row entry-row{
     width:600px;
@@ -133,18 +121,20 @@ h2{
     margin: 0 0 12px 0;
   }
 
-.article li {
+[id^=bc]{
     display: block;
-    margin: 0 0 13px 0;
     padding: 10px;
     background-color: transparent;
     border: 3px solid black;
     border-radius: 3px;
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.4);
     transition: all 220ms;
+    margin:2px auto;
+    margin-right:10px;
+    width:31.9%;
 }
 
-.article li:hover {
+[id^=bc]:hover {
     box-shadow: 0px 2px 3px 1px #333333;
     transform : translateY(-5px);
     transition:all 220ms;
@@ -232,19 +222,47 @@ div[id=footer] {
 
 
 .blur{
-	text-shadow: 0px 0px 10px rgba(51, 51, 51, 0.9);
-	color: rgba(51, 51, 51, 0);
-	opacity: 0.5;
+    opacity: 1;
+}
+.active-blur{
+
 }
 
 table{
-    border:1px solid black;
-        text-align: center;
+    border:1px solid black;v
+    text-align: center;
     border-spacing: 10px;
     margin:0 auto;
 }
 tr td{
-    border:1px solid black;
     text-align: center;
     border-spacing: 10px;
+}
+
+
+#back_layer{
+    transform: translateZ(100px);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+#task_table{
+    transform: translateZ(100px);
+    position: fixed;
+    top:25%;
+    left:25%;
+    width: 50%;
+    background-color: #ececec;
+    border: 3px solid #eb586b;
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.7);
+    border-radius: 7px;
+    height: auto;
+    max-height: 50%;
+    overflow-y: scroll;
+
+}
+.no_display{
+    display: block;
 }
