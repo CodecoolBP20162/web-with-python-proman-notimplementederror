@@ -67,15 +67,7 @@ $(document).ready(function () {
        $('#sonka').slideToggle('slow');
        click=!click;
     });
-  
-    $( "#sortable" ).sortable();
-    $( "#sortable" ).disableSelection();
-    $('.c_b').click(function() { $(this).parent().remove() });
-    
-    var somearray = [];
 
-    $("#sortable li").each(function(index){
-        somearray.push($(this).index());
     
     console.log(somearray)
     });
