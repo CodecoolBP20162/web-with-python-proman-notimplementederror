@@ -42,31 +42,14 @@ $(document).ready(function () {
     }
 
     $('#intro').hide();
+    var board=new Boards('sample');
+    board.get_cards();
 
-    //At start, load all item from storage, and fill boards
-    for (i in localStorage) {
-        var retrievedObject = localStorage.getItem(i);
-        retrievedObject = JSON.parse(retrievedObject);
-        local_obj.push(retrievedObject);
-        strng='<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"> <p id="image_"><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>'+ retrievedObject.title+ '</p></div>';
-        $(strng).appendTo(".row");
-        count_id++;
-    }
-
-    //When clicked on, adds a new boards with inputted text
     $('#newboard-button').click(function () {
-        count_board++;
-        var text=$('#newboard-input').val();
-        var board = factory("card",text);
-        local_obj.push(board);
-        localStorage.setItem(board.id, JSON.stringify(board));
-        strng='<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"><p><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>Title</p></div>';
-        $(strng).text(board.title).appendTo(".row");
-
+        board.createCard();
     });
 
-    //When clicked on, cards slide down, everything gets blurry
-    //
+
     $('[id^="bc"]').live('click',function(){
         obj_id=this.id.toString();
         obj_id=obj_id.substr(2);
@@ -129,14 +112,45 @@ $(document).click(function() {
 
    }
 });
-
     $('#li1').live('click', divClicked);
 
     function Boards(title) {
         this.id = count_id++;
         this.title = title;
         this.cards = [];
-    }
+        this.state=new LocalStorage();
+        this.get_cards=function() {
+            for (i in localStorage) {
+                var retrievedObject = localStorage.getItem(i);
+                retrievedObject = JSON.parse(retrievedObject);
+                local_obj.push(retrievedObject);
+                strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + retrievedObject.id + '"> <p id="image_"><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>' + retrievedObject.title + '</p></div>';
+                $(strng).appendTo(".row");
+                count_id++;
+            }
+        }
+        this.createCard=function () {
+            this.state.createCard();
+        }
+
+    };
+
+    function LocalStorage(){
+        this.createCard=function(){
+            count_board++;
+            var text=$('#newboard-input').val();
+            var board = factory("card",text);
+            local_obj.push(board);
+            localStorage.setItem(board.id, JSON.stringify(board));
+            strng='<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"><p><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>Title</p></div>';
+            $(strng).text(board.title).appendTo(".row");
+        }
+
+    };
+
+    function SQLStorage(){
+
+    };
 
     function Tasks(title) {
         count_task++;
@@ -147,17 +161,6 @@ $(document).click(function() {
     }
     $('.add').click(function(){
        $('#input_fields').toggle();
-    });
-
-    $( "#sortable" ).sortable();
-    //$( "#sortable" ).disableSelection();
-    $('#get_row').click(function() { $(this).parent().remove() });
-
-    var somearray = [];
-
-    $("#sortable >#li1").each(function(index){
-        somearray.push($(this).index());
-
     });
 
 });
