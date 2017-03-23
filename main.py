@@ -8,9 +8,15 @@ app.config.from_object(__name__)
 def home_menu():
     return render_template('index.html')
 
+
+@app.route('/proba')
+def proba():
+    return render_template('proba.html')
+
 @app.route('/tasks')
 def tasks():
     return render_template('tasks.html')
+
 
 
 if __name__ == "__main__":

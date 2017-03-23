@@ -1,3 +1,32 @@
+
+#sortable { 
+    list-style-type: none; 
+    margin: 100px auto;
+    padding: 0; 
+    width: 90%;
+    }
+
+#sortable li { 
+    margin:0.5em; 
+    padding: 1px; 
+    float: left;
+    width: 330px; 
+    height: 150px;
+    font-size: 2em; 
+    text-align: left;
+    
+    border-radius: 5px;
+    font-family: Raleway;
+    font-weight: 100;
+    }
+
+h1 {
+    text-align: center;
+    font-family: Raleway;
+    font-size: 50px;
+    font-weight: 200;
+}
+
 .entry-row{
     height: auto;
 
@@ -89,7 +118,7 @@ div[id=sonka]{
     margin:0 auto;
     }
 
-table{
+table {
     border-collapse: separate;
     border-spacing: 13px 13px;
 }
@@ -101,11 +130,10 @@ td{
 h2{
     text-align:center;
     font-size:14px;
-    text-transform:uppercase;
     margin: 0 0 12px 0;
   }
 
-.article {
+.article li {
     display: block;
     margin: 0 0 13px 0;
     padding: 10px;
@@ -116,10 +144,23 @@ h2{
     transition: all 220ms;
 }
 
-.article:hover {
-    box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.4);
-    transform : translateY(-3px);
+.article li:hover {
+    box-shadow: 0px 2px 3px 1px #333333;
+    transform : translateY(-5px);
     transition:all 220ms;
+}
+
+.c_b {  
+    float: right;
+    text-align: right;
+    padding: 5px;   
+}
+
+.c_c {
+    clear: both;
+    padding: 4px;
+    text-align:justify;
+    font-size:16px;
 }
 
 img{
@@ -150,8 +191,10 @@ img{
     transform: scale(1.1);
     }
 
+
 .up{bottom: 110px;}
 .add{bottom: 50px;}
+
 
 /*••••••••••••FOOTER••••••••••••*/
 
@@ -205,5 +248,3 @@ tr td{
     text-align: center;
     border-spacing: 10px;
 }
-
-
