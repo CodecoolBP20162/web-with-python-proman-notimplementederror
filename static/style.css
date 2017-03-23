@@ -1,48 +1,46 @@
 
-
 #sortable { 
     list-style-type: none; 
-    margin: 150px auto;
+    margin: 100px auto;
     padding: 0; 
     width: 90%;
+    
     
     
     
     }
 
 #sortable li { 
-    margin: 0.5em; 
+    margin:0.5em; 
     padding: 1px; 
-    float: left; 
-    width: 250px; 
-    height: 200px; 
+    float: left;
+    width: 330px; 
+    height: 150px;
     font-size: 2em; 
     text-align: left;
     
     border-radius: 5px;
     font-family: Raleway;
+    font-weight: 100;
+
+    
+
+    
     }
 
 h1 {
     text-align: center;
     font-family: Raleway;
+    font-size: 50px;
+    font-weight: 200;
 }
 
 
 
-body{
+body {
     background-color: grey;
     }
 
-
-/*#cards {
-    position: relative;
-    margin: 0 auto;
-    width: 100%;
-    font-family: "Raleway";
-    text-align: center;
-    color: black;
-}*/
 
 ••••••••••••HEADER••••••••••••
 
@@ -58,7 +56,7 @@ div[id=board_container] {
     margin-top: 100px;
     }
 
-table{
+table {
     border-collapse: separate;
     border-spacing: 20px 20px;
 }
@@ -70,11 +68,10 @@ td{
 h2{
     text-align:center;
     font-size:14px;
-    
     margin: 0 0 12px 0;
   }
 
-.article {
+.article li {
     display: block;
     margin: 0 0 20px 0;
     padding: 12px;
@@ -84,24 +81,27 @@ h2{
     transition: all 220ms;
 }
 
-.article:hover {
+.article li:hover {
     box-shadow: 0px 2px 3px 1px #333333;
     transform : translateY(-5px);
     transition:all 220ms;
 }
 
-.c_t{
-    text-indent: 1em;
-    text-align:left;
-    font-size:20px;
-    
+
+.c_b {  
+    float: right;
+    text-align: right;
+    padding: 5px;   
 }
 
+
 .c_c {
+    clear: both;
+    padding: 4px;
     text-align:justify;
     font-size:16px;
-    
 }
+
 
 
 ••••••••••••FOOTER••••••••••••
