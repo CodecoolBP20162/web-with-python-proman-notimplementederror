@@ -56,7 +56,7 @@ $(document).ready(function(){
 
     $('#card_add').live('click',function () {
         var card=$('#card_text').val();
-        $('#sonka').append($('<div id="x">  <h1>' + card + '</h1> </div>'));
+        $('#x').append($('<tr><td></td><td></td><td></td><td><p>' + card+  '<br></p></td></tr>'));
         var retrievedObject = localStorage.getItem(this.getAttribute('class'));
         retrievedObject=JSON.parse(retrievedObject);
         retrievedObject.cards.push(card);
@@ -74,10 +74,6 @@ $(document).ready(function(){
         this.title=title;
         this.cards=["sonka","sali","kapi","kalap"]
     };
-
-
-
-
 });
 
 
