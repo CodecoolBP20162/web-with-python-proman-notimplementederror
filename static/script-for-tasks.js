@@ -9,7 +9,6 @@ $(document).ready(function () {
             retrievedObject=JSON.parse(retrievedObject);
             $('<div id="tasks"><label></label></div>').text(retrievedObject.title).appendTo("#tasks");
         }
-
     }
 
     if (!String.prototype.format) {
@@ -43,6 +42,6 @@ $(document).ready(function () {
         this.id = task_id;
         this.title = title;
 
-    };
+    }
 
     });
