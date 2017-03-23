@@ -5,7 +5,8 @@ $(document).ready(function () {
     var count_board = 0;
     var count_task = 0;
     var count_id = 0;
-    var board=new Boards('sample');
+    var board = new Boards('sample');
+
 
     var factory = function (obj, title) {
         if (obj == "card") {
@@ -50,20 +51,19 @@ $(document).ready(function () {
 
     //At start, load all item from storage, and fill boards
     var boardLoader = function () {
-          board.get_cards();
-        }
+        board.get_cards();
     };
 
     //When clicked on, adds a new boards with inputted text
     var newBoardButton = function () {
         $('#newboard-button').click(function () {
-            board.createCard();
+            board.createBoard();
         });
     };
-    var toggleBoardInput=function(){
-    $('.add').click(function(){
-       $('#input_fields').toggle();
-    });
+    var toggleBoardInput = function () {
+        $('.add').click(function () {
+            $('#input_fields').toggle();
+        });
     };
 
     //When clicked on, cards slide down, everything gets blurry
@@ -78,7 +78,7 @@ $(document).ready(function () {
                         $('back_layer').css('opacity', '0');
                         $('#task_table').empty();
 
-                        $('#task_table').append($('<p>' + local_obj[i].title + '</p><button id="card_add" class="' + obj_id + '">Create Card!</button><input type="text" id="card_text" >'));
+                        $('#task_table').append($('<h1>' + local_obj[i].title + '</h1><button id="card_add" class="' + obj_id + '">Create Card!</button><input type="text" id="card_text" placeholder="Task title" >'));
                         $('#task_table').append($('<ul id="sortable" class="article"><div id="new" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>New Cards</label></div><div id="review" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Review</label></div><div id="in-progress" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>In progress</label></div><div id="done" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Done</label></div></ul>'));
                         for (var j = 0; j < local_obj[i].cards.length; j++) {
                             status_finder(local_obj[i].cards[j].status, local_obj[i].cards[j].title)
@@ -98,7 +98,7 @@ $(document).ready(function () {
             var card = $('#card_text').val();
             status_finder("new", card);
             var retrievedObject = localStorage.getItem(this.getAttribute('class'));
-            var task = factory("task", card);
+            var task = factory("card", card);
             retrievedObject = JSON.parse(retrievedObject);
             retrievedObject.cards.push(task);
             localStorage.setItem(retrievedObject.id, JSON.stringify(retrievedObject));
@@ -107,6 +107,7 @@ $(document).ready(function () {
 
     var divClicked = function () {
         var text = $(this).text();
+        alert(this);
         var length = text.length;
         var editableText = $("<textarea />");
         editableText.val(text);
@@ -136,12 +137,12 @@ $(document).ready(function () {
         });
     };
 
-    var Boards = function (title) {
+    function Boards(title) {
         this.id = count_id++;
         this.title = title;
         this.cards = [];
-        this.state=new LocalStorage();
-        this.get_cards=function() {
+        this.state = new LocalStorage();
+        this.get_cards = function () {
             for (i in localStorage) {
                 var retrievedObject = localStorage.getItem(i);
                 retrievedObject = JSON.parse(retrievedObject);
@@ -151,26 +152,27 @@ $(document).ready(function () {
                 count_id++;
             }
         }
-        this.createCard=function () {
-            this.state.createCard();
+        this.createBoard = function () {
+            this.state.createBoard();
         }
 
     };
 
-    var LocalStorage=function(){
-        this.createCard=function(){
+    function LocalStorage() {
+        this.createBoard = function () {
             count_board++;
-            var text=$('#newboard-input').val();
-            var board = factory("card",text);
+            var text = $('#newboard-input').val();
+            var board = factory("board", text);
             local_obj.push(board);
+            console.log(board.id);
             localStorage.setItem(board.id, JSON.stringify(board));
-            strng='<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"><p><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>Title</p></div>';
+            strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + retrievedObject.id + '"><p><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>Title</p></div>';
             $(strng).text(board.title).appendTo(".row");
         }
 
     };
 
-    var Tasks = function (title) {
+    function Tasks(title) {
         count_task++;
         task_id = 'task{0}'.format(count_task);
         this.id = task_id;
@@ -179,8 +181,8 @@ $(document).ready(function () {
     };
 
     var main = function () {
+        $('#task_table').hide();
         stringFormat();
-        $('#intro').hide();
         boardLoader();
         newBoardButton();
         toggleBoardInput();
