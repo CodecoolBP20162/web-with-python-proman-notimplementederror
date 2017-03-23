@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
 
     var local_obj = [];
@@ -6,85 +5,107 @@ $(document).ready(function () {
     var count_board = 0;
     var count_task = 0;
     var count_id = 0;
-
-    var factory=function(obj,title){
-        if(obj=="card"){return new Tasks(title);}
-        else{return new Boards(title);}
-    }
-
-    var status_finder=function(status,title){
-        switch(status){
-           case "new":
-               $("#new").append('<li id="li1">'+title  +'</li>');
-               break;
-           case "in-progress":
-               $("#in-progress").append('<li id="li1">'+title  +'</li>');
-               break;
-           case "review":
-               $("#review").append('<li id="li1">'+title +'</li>');
-               break;
-           case "done":
-               $("#done").append('<li id="li1">'+ title +'</li>');
-               break;
-   }
-       }
-
-    if (!String.prototype.format) {
-        String.prototype.format = function () {
-            var args = arguments;
-            return this.replace(/{(\d+)}/g, function (match, number) {
-                return typeof args[number] != 'undefined'
-                    ? args[number]
-                    : match
-                    ;
-            });
-        };
-    }
-
-    $('#intro').hide();
     var board=new Boards('sample');
-    board.get_cards();
 
-    $('#newboard-button').click(function () {
-        board.createCard();
+    var factory = function (obj, title) {
+        if (obj == "card") {
+            return new Tasks(title);
+        }
+        else {
+            return new Boards(title);
+        }
+    };
+
+    var status_finder = function (status, title) {
+        switch (status) {
+            case "new":
+                $("#new").append('<li id="li1">' + title + '</li>');
+                break;
+            case "in-progress":
+                $("#in-progress").append('<li id="li1">' + title + '</li>');
+                break;
+            case "review":
+                $("#review").append('<li id="li1">' + title + '</li>');
+                break;
+            case "done":
+                $("#done").append('<li id="li1">' + title + '</li>');
+                break;
+        }
+    };
+
+    //"string{0}".format(variable)
+    var stringFormat = function () {
+        if (!String.prototype.format) {
+            String.prototype.format = function () {
+                var args = arguments;
+                return this.replace(/{(\d+)}/g, function (match, number) {
+                    return typeof args[number] != 'undefined'
+                        ? args[number]
+                        : match
+                        ;
+                });
+            };
+        }
+    };
+
+    //At start, load all item from storage, and fill boards
+    var boardLoader = function () {
+          board.get_cards();
+        }
+    };
+
+    //When clicked on, adds a new boards with inputted text
+    var newBoardButton = function () {
+        $('#newboard-button').click(function () {
+            board.createCard();
+        });
+    };
+    var toggleBoardInput=function(){
+    $('.add').click(function(){
+       $('#input_fields').toggle();
     });
+    };
 
+    //When clicked on, cards slide down, everything gets blurry
+    var clickBlurry = function () {
+        $('[id^="bc"]').live('click', function () {
+            obj_id = this.id.toString();
+            obj_id = obj_id.substr(2);
+            for (var i = 0; i < local_obj.length; i++) {
+                if (local_obj[i].id.toString() === obj_id) {
+                    if (!click) {
+                        $('#back_layer').addClass('show_bl');
+                        $('back_layer').css('opacity', '0');
+                        $('#task_table').empty();
 
-    $('[id^="bc"]').live('click',function(){
-        obj_id=this.id.toString();
-        obj_id=obj_id.substr(2);
-       for(var i=0;i<local_obj.length;i++) {
-           if(local_obj[i].id.toString()===obj_id) {
-               if(!click){
-                   $('#back_layer').addClass('show_bl');
-                   $('back_layer').css('opacity','0');
-                   $('#task_table').empty();
+                        $('#task_table').append($('<p>' + local_obj[i].title + '</p><button id="card_add" class="' + obj_id + '">Create Card!</button><input type="text" id="card_text" >'));
+                        $('#task_table').append($('<ul id="sortable" class="article"><div id="new" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>New Cards</label></div><div id="review" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Review</label></div><div id="in-progress" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>In progress</label></div><div id="done" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Done</label></div></ul>'));
+                        for (var j = 0; j < local_obj[i].cards.length; j++) {
+                            status_finder(local_obj[i].cards[j].status, local_obj[i].cards[j].title)
+                        }
 
-               $('#task_table').append($('<p>'+local_obj[i].title+'</p><button id="card_add" class="' + obj_id+ '">Create Card!</button><input type="text" id="card_text" >'));
-               $('#task_table').append($('<ul id="sortable" class="article"><div id="new" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>New Cards</label></div><div id="review" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Review</label></div><div id="in-progress" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>In progress</label></div><div id="done" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Done</label></div></ul>'));
-               for(var j=0;j<local_obj[i].cards.length;j++) {
-                   status_finder(local_obj[i].cards[j].status,local_obj[i].cards[j].title)
-               }
+                    } else {
+                        $('#back_layer').removeClass('show_bl');
+                    }
+                }
+            }
+            click = !click;
+        });
+    };
 
-               }else {$('#back_layer').removeClass('show_bl');}
-           }
-       }
-       click=!click;
-    });
+    var newCardButton = function () {
+        $('#card_add').live('click', function () {
+            var card = $('#card_text').val();
+            status_finder("new", card);
+            var retrievedObject = localStorage.getItem(this.getAttribute('class'));
+            var task = factory("task", card);
+            retrievedObject = JSON.parse(retrievedObject);
+            retrievedObject.cards.push(task);
+            localStorage.setItem(retrievedObject.id, JSON.stringify(retrievedObject));
+        });
+    };
 
-
-    $('#card_add').live('click',function () {
-        var card=$('#card_text').val();
-        status_finder("new",card);
-        var retrievedObject = localStorage.getItem(this.getAttribute('class'));
-        var task = factory("task",card);
-        retrievedObject = JSON.parse(retrievedObject);
-        retrievedObject.cards.push(task);
-        localStorage.setItem(retrievedObject.id, JSON.stringify(retrievedObject));
-    });
-
-
-    function divClicked() {
+    var divClicked = function () {
         var text = $(this).text();
         var length = text.length;
         var editableText = $("<textarea />");
@@ -92,29 +113,30 @@ $(document).ready(function () {
         $(this).replaceWith(editableText);
         editableText.focus();
         editableText.blur(editableTextBlurred);
-    }
+    };
 
-    function editableTextBlurred() {
+    var editableTextBlurred = function () {
         var html = $(this).val();
         var viewableText = $("<li id='li1'>");
         viewableText.html(html);
         $(this).replaceWith(viewableText);
         $(viewableText).click(divClicked);
-    }
+    };
 
-$(document).click(function() {
-   if(click){
-  if( this.id != '#task_table') {
-    $("#task_table").show();
-  }
-  }else{
-       $('#task_table').hide();
+    var taskTableToggle = function () {
+        $(document).click(function () {
+            if (click) {
+                if (this.id != '#task_table') {
+                    $("#task_table").show();
+                }
+            } else {
+                $('#task_table').hide();
 
-   }
-});
-    $('#li1').live('click', divClicked);
+            }
+        });
+    };
 
-    function Boards(title) {
+    var Boards = function (title) {
         this.id = count_id++;
         this.title = title;
         this.cards = [];
@@ -135,7 +157,7 @@ $(document).click(function() {
 
     };
 
-    function LocalStorage(){
+    var LocalStorage=function(){
         this.createCard=function(){
             count_board++;
             var text=$('#newboard-input').val();
@@ -148,19 +170,27 @@ $(document).click(function() {
 
     };
 
-    function SQLStorage(){
-
-    };
-
-    function Tasks(title) {
+    var Tasks = function (title) {
         count_task++;
         task_id = 'task{0}'.format(count_task);
         this.id = task_id;
         this.title = title;
         this.status = "new";
-    }
-    $('.add').click(function(){
-       $('#input_fields').toggle();
-    });
+    };
+
+    var main = function () {
+        stringFormat();
+        $('#intro').hide();
+        boardLoader();
+        newBoardButton();
+        toggleBoardInput();
+        clickBlurry();
+        newCardButton();
+        $('#li1').live('click', divClicked);
+        taskTableToggle();
+    };
+
+    main();
+
 
 });
