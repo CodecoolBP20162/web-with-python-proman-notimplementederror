@@ -1,6 +1,5 @@
 
 $(document).ready(function () {
-    $('back_layer').css({ opacity: 0 });
 
     //global vars
     var local_obj = [];
@@ -8,6 +7,24 @@ $(document).ready(function () {
     var count_board = 0;
     var count_task = 0;
     var count_id = 0;
+
+    var status_finder=function(status,title){
+        switch(status){
+           case "new":
+               $("#new").append('<li id="li1">'+title  +'</li>');
+               break;
+           case "in-progress":
+               $("#in-progress").append('<li id="li1">'+title  +'</li>');
+               break;
+           case "review":
+               $("#review").append('<li id="li1">'+title +'</li>');
+               break;
+           case "done":
+               $("#done").append('<li id="li1">'+ title +'</li>');
+               break;
+
+   }
+       }
 
     if (!String.prototype.format) {
         String.prototype.format = function () {
@@ -56,16 +73,18 @@ $(document).ready(function () {
                if(click){
                    $('back_layer').css('opacity','0');
                    $('#task_table').empty();
+
                $('#task_table').append($('<p>'+local_obj[i].title+'</p><button id="card_add" class="' + obj_id+ '">Create Card!</button><input type="text" id="card_text" >'));
-               $('#task_table').append($('<table id="card_table"><tr id="status"><th>Done</th><th>In Progress</th><th>Review</th><th>New</th> </tr></table>'));
+               $('#task_table').append($('<ul id="sortable" class="article"><div id="new" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>New Cards</label></div><div id="review" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Review</label></div><div id="in-progress" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>In progress</label></div><div id="done" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Done</label></div></ul>'));
                for(var j=0;j<local_obj[i].cards.length;j++) {
-                   $("#card_table").append('<tr><td></td><td></td><td></td><td><p>' + local_obj[i].cards[j].title + '<br></p></td></tr>');
+                   status_finder(local_obj[i].cards[j].status,local_obj[i].cards[j].title)
                }
+
                }
            }
        }
+
        if(!click){
-            $('back_layer').css('opacity','0.5');
        }
        click=!click;
     });
@@ -73,7 +92,7 @@ $(document).ready(function () {
 
     $('#card_add').live('click',function () {
         var card=$('#card_text').val();
-        $('#card_table').append($('<tr><td></td><td></td><td></td><td><p>' + card+  '<br></p></td></tr>'));
+        status_finder("new",card);
         var retrievedObject = localStorage.getItem(this.getAttribute('class'));
         var task = new Tasks(card);
         retrievedObject = JSON.parse(retrievedObject);
@@ -83,7 +102,7 @@ $(document).ready(function () {
 
 
     function divClicked() {
-        var text = $(this).html();
+        var text = $(this).text();
         var length = text.length;
         var editableText = $("<textarea />");
         editableText.val(text);
@@ -100,7 +119,18 @@ $(document).ready(function () {
         $(viewableText).click(divClicked);
     }
 
-    $('#card_table').live('click', divClicked);
+$(document).click(function() {
+   if(click){
+  if( this.id != '#task_table') {
+    $("#task_table").hide();
+  }
+  }else{
+       $('#task_table').show();
+   }
+
+});
+
+    $('#li1').live('click', divClicked);
 
     function Boards(title) {
         this.id = count_id++;
@@ -119,22 +149,9 @@ $(document).ready(function () {
        $('#input_fields').toggle();
     });
 
-
-    $('#task_table').click(function ()
-    {
-    var container = $('#task_table');
-
-    if (!container.is($(this).target) // if the target of the click isn't the container...
-        && container.has($(this).target).length === 0) // ... nor a descendant of the container
-    {
-        container.hide();
-    }
-    });
-
-
     $( "#sortable" ).sortable();
     $( "#sortable" ).disableSelection();
-    $('.c_b').click(function() { $(this).parent().remove() });
+    $('#get_row').click(function() { $(this).parent().remove() });
 
     var somearray = [];
 
