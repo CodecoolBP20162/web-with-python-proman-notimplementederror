@@ -1,12 +1,16 @@
 
 $(document).ready(function () {
 
-    //global vars
     var local_obj = [];
     var click = true;
     var count_board = 0;
     var count_task = 0;
     var count_id = 0;
+
+    var factory=function(obj,title){
+        if(obj=="card"){return new Tasks(title);}
+        else{return new Boards(title);}
+    }
 
     var status_finder=function(status,title){
         switch(status){
@@ -22,7 +26,6 @@ $(document).ready(function () {
            case "done":
                $("#done").append('<li id="li1">'+ title +'</li>');
                break;
-
    }
        }
 
@@ -54,7 +57,7 @@ $(document).ready(function () {
     $('#newboard-button').click(function () {
         count_board++;
         var text=$('#newboard-input').val();
-        var board = new Boards(text);
+        var board = factory("card",text);
         local_obj.push(board);
         localStorage.setItem(board.id, JSON.stringify(board));
         strng='<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"><p><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>Title</p></div>';
@@ -65,12 +68,12 @@ $(document).ready(function () {
     //When clicked on, cards slide down, everything gets blurry
     //
     $('[id^="bc"]').live('click',function(){
-        console.log($(this));
         obj_id=this.id.toString();
         obj_id=obj_id.substr(2);
        for(var i=0;i<local_obj.length;i++) {
            if(local_obj[i].id.toString()===obj_id) {
-               if(click){
+               if(!click){
+                   $('#back_layer').addClass('show_bl');
                    $('back_layer').css('opacity','0');
                    $('#task_table').empty();
 
@@ -80,11 +83,8 @@ $(document).ready(function () {
                    status_finder(local_obj[i].cards[j].status,local_obj[i].cards[j].title)
                }
 
-               }
+               }else {$('#back_layer').removeClass('show_bl');}
            }
-       }
-
-       if(!click){
        }
        click=!click;
     });
@@ -94,7 +94,7 @@ $(document).ready(function () {
         var card=$('#card_text').val();
         status_finder("new",card);
         var retrievedObject = localStorage.getItem(this.getAttribute('class'));
-        var task = new Tasks(card);
+        var task = factory("task",card);
         retrievedObject = JSON.parse(retrievedObject);
         retrievedObject.cards.push(task);
         localStorage.setItem(retrievedObject.id, JSON.stringify(retrievedObject));
@@ -122,12 +122,12 @@ $(document).ready(function () {
 $(document).click(function() {
    if(click){
   if( this.id != '#task_table') {
-    $("#task_table").hide();
+    $("#task_table").show();
   }
   }else{
-       $('#task_table').show();
-   }
+       $('#task_table').hide();
 
+   }
 });
 
     $('#li1').live('click', divClicked);
@@ -150,15 +150,14 @@ $(document).click(function() {
     });
 
     $( "#sortable" ).sortable();
-    $( "#sortable" ).disableSelection();
+    //$( "#sortable" ).disableSelection();
     $('#get_row').click(function() { $(this).parent().remove() });
 
     var somearray = [];
 
-    $("#sortable li").each(function(index){
+    $("#sortable >#li1").each(function(index){
         somearray.push($(this).index());
 
-    console.log(somearray)
     });
 
 });
