@@ -1,9 +1,30 @@
 
 $(document).ready(function () {
+
+    //global vars
     var local_obj = [];
     var click = true;
-    var count_idd = 0;
-    var count_id2 = 0;
+    var count_board = 0;
+    var count_task = 0;
+    var count_id = 0;
+
+    var status_finder=function(status,title){
+        switch(status){
+           case "new":
+               $("#new").append('<li id="li1">'+title  +'</li>');
+               break;
+           case "in-progress":
+               $("#in-progress").append('<li id="li1">'+title  +'</li>');
+               break;
+           case "review":
+               $("#review").append('<li id="li1">'+title +'</li>');
+               break;
+           case "done":
+               $("#done").append('<li id="li1">'+ title +'</li>');
+               break;
+
+   }
+       }
 
     if (!String.prototype.format) {
         String.prototype.format = function () {
@@ -18,60 +39,60 @@ $(document).ready(function () {
     }
 
     $('#intro').hide();
-    var count_id = 0;
+
+    //At start, load all item from storage, and fill boards
     for (i in localStorage) {
         var retrievedObject = localStorage.getItem(i);
         retrievedObject = JSON.parse(retrievedObject);
         local_obj.push(retrievedObject);
-        strng='<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"> <p id="image_"><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>'+ retrievedObject.title+ '</p></div>';
+        strng='<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"> <p id="image_"><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>'+ retrievedObject.title+ '</p></div>';
         $(strng).appendTo(".row");
         count_id++;
     }
 
+    //When clicked on, adds a new boards with inputted text
     $('#newboard-button').click(function () {
-        count_idd++;
+        count_board++;
         var text=$('#newboard-input').val();
         var board = new Boards(text);
         local_obj.push(board);
         localStorage.setItem(board.id, JSON.stringify(board));
-        strng='<div class="valami col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"><p><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>Title</p></div>';
+        strng='<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc'+ retrievedObject.id+ '"><p><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>Title</p></div>';
         $(strng).text(board.title).appendTo(".row");
 
     });
 
+    //When clicked on, cards slide down, everything gets blurry
+    //
     $('[id^="bc"]').live('click',function(){
-        var $current=$(this);
+        console.log($(this));
         obj_id=this.id.toString();
-        obj_id=obj_id.substr(2)
+        obj_id=obj_id.substr(2);
        for(var i=0;i<local_obj.length;i++) {
            if(local_obj[i].id.toString()===obj_id) {
-               $("div").not($(this)).removeClass('blur')
                if(click){
-                   console.log(click)
-                   $('div').remove('#sonka')
-                   $("div").not($(this)).removeClass('blur')
-               $("div").not($(this)).addClass('blur');
-                   $(this).addClass('notblur');
-               $(this).removeClass('blur');
-               $current.removeClass('blur');
+                   $('back_layer').css('opacity','0');
+                   $('#task_table').empty();
 
-               $(this).after($('<div id="sonka"><button id="card_add" class="' + obj_id+ '">Create Card!</button><input type="text" id="card_text" ></div>'));
-               $('#sonka').append($('<table id="x"><tr id="status"><th>Done</th><th>In Progress</th><th>Review</th><th>New</th> </tr></table>'));
+               $('#task_table').append($('<p>'+local_obj[i].title+'</p><button id="card_add" class="' + obj_id+ '">Create Card!</button><input type="text" id="card_text" >'));
+               $('#task_table').append($('<ul id="sortable" class="article"><div id="new" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>New Cards</label></div><div id="review" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Review</label></div><div id="in-progress" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>In progress</label></div><div id="done" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Done</label></div></ul>'));
                for(var j=0;j<local_obj[i].cards.length;j++) {
-                   $("#x").append('<tr><td></td><td></td><td></td><td><p>' + local_obj[i].cards[j].title + '<br></p></td></tr>');
+                   status_finder(local_obj[i].cards[j].status,local_obj[i].cards[j].title)
                }
+
                }
            }
        }
 
-       $('#sonka').slideToggle('slow');
+       if(!click){
+       }
        click=!click;
     });
 
 
     $('#card_add').live('click',function () {
         var card=$('#card_text').val();
-        $('#x').append($('<tr><td></td><td></td><td></td><td><p>' + card+  '<br></p></td></tr>'));
+        status_finder("new",card);
         var retrievedObject = localStorage.getItem(this.getAttribute('class'));
         var task = new Tasks(card);
         retrievedObject = JSON.parse(retrievedObject);
@@ -81,7 +102,7 @@ $(document).ready(function () {
 
 
     function divClicked() {
-        var text = $(this).html();
+        var text = $(this).text();
         var length = text.length;
         var editableText = $("<textarea />");
         editableText.val(text);
@@ -98,7 +119,18 @@ $(document).ready(function () {
         $(viewableText).click(divClicked);
     }
 
-    $('#x').live('click', divClicked);
+$(document).click(function() {
+   if(click){
+  if( this.id != '#task_table') {
+    $("#task_table").hide();
+  }
+  }else{
+       $('#task_table').show();
+   }
+
+});
+
+    $('#li1').live('click', divClicked);
 
     function Boards(title) {
         this.id = count_id++;
@@ -107,20 +139,19 @@ $(document).ready(function () {
     }
 
     function Tasks(title) {
-        count_id2++;
-        task_id = 'task{0}'.format(count_id2);
+        count_task++;
+        task_id = 'task{0}'.format(count_task);
         this.id = task_id;
         this.title = title;
         this.status = "new";
     }
-    $('#add').click(function(){
+    $('.add').click(function(){
        $('#input_fields').toggle();
     });
 
-
     $( "#sortable" ).sortable();
     $( "#sortable" ).disableSelection();
-    $('.c_b').click(function() { $(this).parent().remove() });
+    $('#get_row').click(function() { $(this).parent().remove() });
 
     var somearray = [];
 

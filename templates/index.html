@@ -5,18 +5,24 @@
 <head>
     <meta charset="UTF-8">
     <link href="../static/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link rel=stylesheet type=text/css href="../static/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="../static/script.js"></script>
 </head>
 
 <body>
+<div id="back_layer">
 <div class="header">
     <p style="color: #122b40">NotImplemented<span style="color: red">Error</span></p>
 </div>
 <div class="title">
     <h1>Pro Man</h1>
     <h2>Your Boards</h2>
+</div>
 
 <div class="row entry-row" id="board_container" >
 
@@ -26,8 +32,7 @@
     <h2 class="major">Intro</h2>
 </div>
 
-<div id="add">
-</div>
+
 
 
 <form id="input_fields">
@@ -42,14 +47,19 @@
 
 <div class="a mod add">
     <a>
-        <img src="../images/add.png">
+        <img src="../static/add.png">
     </a>
 </div>
 <div class="a mod up">
     <a>
-        <img src="../images/up.png">
+        <img src="../static/up.png">
     </a>
 </div>
+
+</div>
+<div id="task_table"></div>
+
+
 
 </body>
 </html>
