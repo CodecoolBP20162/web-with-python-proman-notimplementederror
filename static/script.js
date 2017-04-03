@@ -180,6 +180,12 @@ $(document).ready(function () {
         this.status = "new";
     };
 
+    //-----for the sortable cards-------
+    $( "#stat_new, #stat_inprogress, #stat_review, #stat_done"  ).sortable({
+      connectWith: ".connectedSortable"
+      }).disableSelection();
+
+
     var main = function () {
         $('#task_table').hide();
         stringFormat();
