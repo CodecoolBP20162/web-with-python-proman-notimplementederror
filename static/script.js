@@ -7,8 +7,8 @@ $(document).ready(function () {
     var count_id = 0;
     var board = new Boards('sample');
 
-
-    var factory = function (obj, title) {
+    // makes either a Board Card or a Task Card
+    var boardTaskFactory = function (obj, title) {
         if (obj == "card") {
             return new Tasks(title);
         }
@@ -17,7 +17,8 @@ $(document).ready(function () {
         }
     };
 
-    var status_finder = function (status, title) {
+    // sorts the tasks into their status group (new, in-progress, review, done)
+    var taskSortByStatus = function (status, title) {
         switch (status) {
             case "new":
                 $("#new").append('<li id="li1">' + title + '</li>');
@@ -49,25 +50,27 @@ $(document).ready(function () {
         }
     };
 
-    //At start, load all item from storage, and fill boards
+    //at start, load all item from storage, and fill boards
     var boardLoader = function () {
         board.get_cards();
     };
 
-    //When clicked on, adds a new boards with inputted text
-    var newBoardButton = function () {
+    //When clicked on, adds a new board with the inputted text
+    var createButton = function () {
         $('#newboard-button').click(function () {
             board.createBoard();
         });
     };
-    var toggleBoardInput = function () {
+
+    //opens and closes the new board pop-up when the plus button is clicked
+    var plusButton = function () {
         $('.add').click(function () {
             $('#input_fields').toggle();
         });
     };
 
-    //When clicked on, cards slide down, everything gets blurry
-    var clickBlurry = function () {
+    //when a board is clicked on, a dark extra layer is added between the boards and the tasks pop-up
+    var layerBehindPopupTrigger = function () {
         $('[id^="bc"]').live('click', function () {
             obj_id = this.id.toString();
             obj_id = obj_id.substr(2);
@@ -79,9 +82,9 @@ $(document).ready(function () {
                         $('#task_table').empty();
 
                         $('#task_table').append($('<h1>' + local_obj[i].title + '</h1><button id="card_add" class="' + obj_id + '">Create Card!</button><input type="text" id="card_text" placeholder="Task title" >'));
-                        $('#task_table').append($('<ul id="sortable" class="article"><div id="new" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>New Cards</label></div><div id="review" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Review</label></div><div id="in-progress" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>In progress</label></div><div id="done" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Done</label></div></ul>'));
+                        $('#task_table').append($('<div id="sortable" class="article"><ul id="new" class="cards col-lg-3 col-md-3 col-sm-3 col-xs-3"><label>New Cards</label></ul><ul id="review" class="cards col-lg-3 col-md-3 col-sm-3 col-xs-3"><label>Review</label></ul><ul id="in-progress" class="cards col-lg-3 col-md-3 col-sm-3 col-xs-3"><label>In progress</label></ul><ul id="done" class="cards col-lg-3 col-md-3 col-sm-3 col-xs-3"><label>Done</label></ul></div>'));
                         for (var j = 0; j < local_obj[i].cards.length; j++) {
-                            status_finder(local_obj[i].cards[j].status, local_obj[i].cards[j].title)
+                            taskSortByStatus(local_obj[i].cards[j].status, local_obj[i].cards[j].title)
                         }
 
                     } else {
@@ -93,38 +96,40 @@ $(document).ready(function () {
         });
     };
 
-    var newCardButton = function () {
+    //when the create card button is clicked in the task pop-up
+    //a new task is created and pushed into the local storage
+    var createTaskButton = function () {
         $('#card_add').live('click', function () {
             var card = $('#card_text').val();
-            status_finder("new", card);
+            taskSortByStatus("new", card);
             var retrievedObject = localStorage.getItem(this.getAttribute('class'));
-            var task = factory("card", card);
+            var task = boardTaskFactory("card", card);
             retrievedObject = JSON.parse(retrievedObject);
             retrievedObject.cards.push(task);
             localStorage.setItem(retrievedObject.id, JSON.stringify(retrievedObject));
         });
     };
 
-    var divClicked = function () {
+    //when a task is clicked, an editable textarea gets created
+    var createTextareaInsteadListItem = function () {
         var text = $(this).text();
-        alert(this);
-        var length = text.length;
         var editableText = $("<textarea />");
         editableText.val(text);
         $(this).replaceWith(editableText);
         editableText.focus();
-        editableText.blur(editableTextBlurred);
+        editableText.blur(saveTextareaValueIntoListItem);
     };
 
-    var editableTextBlurred = function () {
+    //saves the textarea input into the html
+    var saveTextareaValueIntoListItem = function () {
         var html = $(this).val();
         var viewableText = $("<li id='li1'>");
         viewableText.html(html);
         $(this).replaceWith(viewableText);
-        $(viewableText).click(divClicked);
+        $(viewableText).click(createTextareaInsteadListItem);
     };
 
-    var taskTableToggle = function () {
+    var showHideTaskTable = function () {
         $(document).click(function () {
             if (click) {
                 if (this.id != '#task_table') {
@@ -136,6 +141,19 @@ $(document).ready(function () {
             }
         });
     };
+
+    function LocalStorage() {
+        this.createBoard = function () {
+            count_board++;
+            var text = $('#newboard-input').val();
+            var board = boardTaskFactory("board", text);
+            local_obj.push(board);
+            console.log(board.id);
+            localStorage.setItem(board.id, JSON.stringify(board));
+            strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + retrievedObject.id + '"><p><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>Title</p></div>';
+            $(strng).text(board.title).appendTo(".row");
+        }
+    }
 
     function Boards(title) {
         this.id = count_id++;
@@ -151,26 +169,11 @@ $(document).ready(function () {
                 $(strng).appendTo(".row");
                 count_id++;
             }
-        }
+        };
         this.createBoard = function () {
             this.state.createBoard();
         }
-
-    };
-
-    function LocalStorage() {
-        this.createBoard = function () {
-            count_board++;
-            var text = $('#newboard-input').val();
-            var board = factory("board", text);
-            local_obj.push(board);
-            console.log(board.id);
-            localStorage.setItem(board.id, JSON.stringify(board));
-            strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + retrievedObject.id + '"><p><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>Title</p></div>';
-            $(strng).text(board.title).appendTo(".row");
-        }
-
-    };
+    }
 
     function Tasks(title) {
         count_task++;
@@ -178,18 +181,18 @@ $(document).ready(function () {
         this.id = task_id;
         this.title = title;
         this.status = "new";
-    };
+    }
 
     var main = function () {
         $('#task_table').hide();
         stringFormat();
         boardLoader();
-        newBoardButton();
-        toggleBoardInput();
-        clickBlurry();
-        newCardButton();
-        $('#li1').live('click', divClicked);
-        taskTableToggle();
+        createButton();
+        plusButton();
+        layerBehindPopupTrigger();
+        createTaskButton();
+        $('#li1').live('click', createTextareaInsteadListItem);
+        showHideTaskTable();
     };
 
     main();
