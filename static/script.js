@@ -235,6 +235,91 @@ $(document).ready(function () {
         }
     }
 
+    function SQLstorage(){
+        this.createBoard=function() {
+
+            count_board++;
+            //var text = $('#newboard-input').val();
+            var text = "sonka";
+            var board = factory("board", text);
+            local_obj.push(board);
+
+            $.ajax({
+                type: 'POST',
+                data: {"id": JSON.stringify(board)},
+                dataType: "json",
+                url: "/create_board",
+                success: function (response) {
+                    alert("succesfully saved to database!");
+                },
+                error: function () {
+                    alert("Error!")
+
+                }
+            });
+        }
+        this.get_cards=function () {
+
+                $.ajax({
+                   type:'GET',
+                   url:'/get_cards',
+                   success:function (response) {
+                       for(var i=0;i<response.length;i++){
+                           strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + response[i].id + '">' +
+                                        '<p id="image_">' +
+                                        '<img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p>' +
+                                        '<p id=title>' + response[i].title + '</p>' +
+                                '   </div>';
+                           $(strng).appendTo(".row");
+                       }
+                       
+                       
+                   },
+                   error:function () {
+                       alert("Not able to get cards!")
+                       
+                   } 
+                });
+            }
+            this.get_card=function (id) {
+
+            $.ajax({
+                type:"POST",
+                url:"/get_card",
+                data:{"id":id},
+                success:function (response) {
+                    return response
+
+                },
+                error:function () {
+                    alert("Error!")
+
+                }
+            });
+
+            }
+            this.save_card=function (retrievedObject) {
+
+            $.ajax({
+                type:"POST",
+                data:{'card':JSON.stringify(retrievedObject)},
+                url:"/save_card",
+                success:function () {
+                    alert("Success on saving this card!")
+
+                },
+                error:function () {
+                    alert("Error!")
+
+                }
+            })
+
+        }
+
+
+        }
+
+
 
 
     var main = function () {
@@ -247,6 +332,8 @@ $(document).ready(function () {
         newCardButton();
         $('#li1').live('click', divClicked);
         taskTableToggle();
+        x=new SQLstorage();
+        x.createBoard();
     };
 
 
