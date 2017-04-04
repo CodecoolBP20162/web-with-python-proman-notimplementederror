@@ -1,19 +1,30 @@
 $(document).ready(function () {
 
+        String.prototype.format = function () {
+        var args = [].slice.call(arguments);
+        return this.replace(/(\{\d+\})/g, function (a){
+            return args[+(a.substr(1,a.length-2))||0];
+        });
+        }
+
     var local_obj = [];
     var click = true;
     var count_board = 0;
     var count_task = 0;
     var count_id = 0;
     var board = new Boards('sample');
+    var task= new Tasks('sample');
 
 
     var factory = function (obj, title) {
         if (obj == "card") {
             return new Tasks(title);
         }
-        else {
+        else if (obj == "board") {
             return new Boards(title);
+        }
+        else {
+            return null;
         }
     };
 
@@ -60,6 +71,7 @@ $(document).ready(function () {
             board.createBoard();
         });
     };
+
     var toggleBoardInput = function () {
         $('.add').click(function () {
             $('#input_fields').toggle();
@@ -96,11 +108,11 @@ $(document).ready(function () {
         $('#card_add').live('click', function () {
             var card = $('#card_text').val();
             status_finder("new", card);
-            var retrievedObject = localStorage.getItem(this.getAttribute('class'));
+            var retrievedObject = task.get_card(this.getAttribute('class'));
             var task = factory("card", card);
             retrievedObject = JSON.parse(retrievedObject);
             retrievedObject.cards.push(task);
-            localStorage.setItem(retrievedObject.id, JSON.stringify(retrievedObject));
+            task.save_card(retrievedObject)
         });
     };
 
@@ -141,19 +153,29 @@ $(document).ready(function () {
         this.cards = [];
         this.state = new LocalStorage();
         this.get_cards = function () {
-            for (i in localStorage) {
-                var retrievedObject = localStorage.getItem(i);
-                retrievedObject = JSON.parse(retrievedObject);
-                local_obj.push(retrievedObject);
-                strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + retrievedObject.id + '"> <p id="image_"><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>' + retrievedObject.title + '</p></div>';
-                $(strng).appendTo(".row");
-                count_id++;
-            }
+            this.state.get_cards()
         }
+
         this.createBoard = function () {
             this.state.createBoard();
         }
 
+
+    };
+
+        function Tasks(title) {
+        count_task++;
+        task_id = 'task{0}'.format(count_task);
+        this.id = task_id;
+        this.title = title;
+        this.status = "new";
+        this.state = new LocalStorage();
+        this.get_card = function(){
+            this.state.get_card()
+        }
+        this.save_card=function(){
+            this.state.save_card()
+        }
     };
 
     function LocalStorage() {
@@ -164,19 +186,39 @@ $(document).ready(function () {
             local_obj.push(board);
             console.log(board.id);
             localStorage.setItem(board.id, JSON.stringify(board));
-            strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + retrievedObject.id + '"><p><img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p><p id=title>Title</p></div>';
+            strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + retrievedObject.id + '">' +
+                        '<p>' +
+                        '<img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" />' + '</p>' +
+                        '<p id=title>Title</p>' +
+                    '</div>';
+
             $(strng).text(board.title).appendTo(".row");
         }
+        this.get_cards = function () {
+            for (i in localStorage) {
+                var retrievedObject = localStorage.getItem(i);
+                retrievedObject = JSON.parse(retrievedObject);
+                local_obj.push(retrievedObject);
+                strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + retrievedObject.id + '">' +
+                            '<p id="image_">' +
+                            '<img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p>' +
+                            '<p id=title>' + retrievedObject.title + '</p>' +
+                    '   </div>';
+                $(strng).appendTo(".row");
+                count_id++;
+            }
+        };
 
-    };
+        this.get_card=function (id) {
+            return localStorage.getItem(id)
+        }
+        this.save_card=function (retrievedObject) {
+            localStorage.setItem(retrievedObject.id, JSON.stringify(retrievedObject));
 
-    function Tasks(title) {
-        count_task++;
-        task_id = 'task{0}'.format(count_task);
-        this.id = task_id;
-        this.title = title;
-        this.status = "new";
-    };
+        }
+    }
+
+
 
     //-----for the sortable cards-------
     $( "#stat_new, #stat_inprogress, #stat_review, #stat_done"  ).sortable({
@@ -195,6 +237,8 @@ $(document).ready(function () {
         $('#li1').live('click', divClicked);
         taskTableToggle();
     };
+
+
 
     main();
 
