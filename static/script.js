@@ -79,7 +79,6 @@ $(document).ready(function () {
                         $('.ui-state-default').empty();
                         $('#taskTitle').empty();
                         $('#taskTitle').append($('<h1>' + local_obj[i].title + '</h1><button id="card_add" class="' + obj_id + '">Create Card!</button><input type="text" id="card_text" placeholder="Task title" >'));
-
                         for (var j = 0; j < local_obj[i].cards.length; j++) {
                             status_finder(local_obj[i].cards[j].status, local_obj[i].cards[j].title)
                         }
