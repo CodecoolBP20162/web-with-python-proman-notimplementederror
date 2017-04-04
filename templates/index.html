@@ -15,26 +15,29 @@
 </head>
 
 <body>
+    <div id="back_layer">
 
-<div id="back_layer">
+        <div id="title">
+            <h1>Your Boards</h1>
+        </div>
 
-    <div id="title">
-        <h1>Your Boards</h1>
+        <div class="row entry-row" id="board_container"></div>
+
+        <form id="input_fields">
+            <div id="inputs">
+                <p></p>
+                <p><strong>ADD A NEW BOARD!</strong></p>
+                <p class="underline"><input type="text" placeholder="board title" id="newboard-input"></p>
+                <p>
+                    <button id="newboard-button">Save</button>
+                    <button id="newboard-button">Cancel</button>
+                </p>
+            </div>
+        </form>
     </div>
 
-    <div class="row entry-row" id="board_container"></div>
-
-    <form id="input_fields">
-        <div id="inputs">
-            <p></p>
-            <p><strong>ADD A NEW BOARD!</strong></p>
-            <p class="underline"><input type="text" placeholder="board title" id="newboard-input"></p>
-            <p>
-                <button id="newboard-button">Save</button>
-                <button id="newboard-button">Cancel</button>
-            </p>
-        </div>
-    </form>
+    <div id="task_table">
+    </div>
 
     <div id="navbar">
         <h2>ProMan</h2>
@@ -46,13 +49,9 @@
         </div>
     </div>
 
-</div>
-
-<div id="task_table"></div>
-
-<div class="header">
-    <p>design by <strong>N. I. <span style="color: red">E.</span></strong></p>
-</div>
+    <div class="header">
+        <p>design by <strong>N. I. <span style="color: red">E.</span></strong></p>
+    </div>
 
 </body>
 </html>
