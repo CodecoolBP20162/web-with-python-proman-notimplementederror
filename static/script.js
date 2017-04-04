@@ -1,5 +1,15 @@
 $(document).ready(function () {
 
+    String.prototype.format = function () {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function (match, number) {
+            return typeof args[number] != 'undefined'
+                ? args[number]
+                : match
+                ;
+        });
+    };
+
     var local_obj = [];
     var click = true;
     var count_board = 0;
@@ -7,6 +17,7 @@ $(document).ready(function () {
     var count_id = 0;
     var board = new Boards('sample');
     var task = new Tasks('sample');
+
 
     // makes either a Board or a Task Card
     var boardTaskFactory = function (obj, title) {
@@ -36,21 +47,6 @@ $(document).ready(function () {
             case "done":
                 $("#stat_done").append('<li id="li1" class="ui-state-default">' + title + '</li>');
                 break;
-        }
-    };
-
-    //"string{0}".format(variable)
-    var stringFormat = function () {
-        if (!String.prototype.format) {
-            String.prototype.format = function () {
-                var args = arguments;
-                return this.replace(/{(\d+)}/g, function (match, number) {
-                    return typeof args[number] != 'undefined'
-                        ? args[number]
-                        : match
-                        ;
-                });
-            };
         }
     };
 
@@ -224,7 +220,6 @@ $(document).ready(function () {
 
     var main = function () {
         $('#task_table').hide();
-        stringFormat();
         boardLoader();
         saveNewBoardButton();
         plusButton();
