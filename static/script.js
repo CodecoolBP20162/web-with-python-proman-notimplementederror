@@ -78,7 +78,7 @@ $(document).ready(function () {
                         $('back_layer').css('opacity', '0');
                         $('#task_table').empty();
 
-                        $('#task_table').append($('<h1>' + local_obj[i].title + '</h1><button id="card_add" class="' + obj_id + '">Create Card!</button><input type="text" id="card_text" placeholder="Task title" >'));
+                        $('#task_table').append($('<h1>' + local_obj[i].title + '</h1></br><p class="underline"><input type="text" id="card_text" placeholder="task title"></p></br><button id="card_add" class="' + obj_id + '">save</button>'));
                         $('#task_table').append($('<ul id="sortable" class="article"><div id="new" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>New Cards</label></div><div id="review" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Review</label></div><div id="in-progress" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>In progress</label></div><div id="done" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Done</label></div></ul>'));
                         for (var j = 0; j < local_obj[i].cards.length; j++) {
                             status_finder(local_obj[i].cards[j].status, local_obj[i].cards[j].title)
