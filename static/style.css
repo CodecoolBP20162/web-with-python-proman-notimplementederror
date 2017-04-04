@@ -261,7 +261,7 @@ tr td{
     transform: translateZ(100px);
     position: fixed;
     top:25%;
-    left:10%;
+    left: 10%;
     width: 80%;
     background-color: #ececec;
     border: 3px solid #eb586b;
