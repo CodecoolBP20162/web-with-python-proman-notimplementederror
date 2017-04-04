@@ -1,19 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<title>ProMan</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Sortable lists</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel=stylesheet type=text/css href="../static/style.css">
+        <!--<link href="../static/bootstrap.min.css" rel="stylesheet">-->
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        <link rel="stylesheet" href="../static/font-awesome-4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="../static/script.js"></script>
+      
+    </head>
+    <body>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <!--<link href="../static/bootstrap.min.css" rel="stylesheet">-->
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link rel=stylesheet type=text/css href="../static/style.css">
-    <link rel="stylesheet" href="../static/font-awesome-4.7.0/css/font-awesome.min.css">
-    <script src="../static/script.js"></script>
-</head>
 
-<body>
- 
+    <!------LISTS------>
+    <div class="cardsContainer">
+        <section class="cardList">  
+        <h3>--NEW--</h3>
+        <ul id="stat_new" class="connectedSortable">
+            <li class="ui-state-default">new item</li>
+            <li class="ui-state-default">Item 2</li>
+            <li class="ui-state-default">Item 3</li>
+            <li class="ui-state-default">Item 4</li>
+            <li class="ui-state-default">Item 5</li>
+        </ul>
+        </section>
+        
+        <section class="cardList">  
+        <h3>--IN PROGRESS--</h3>
+        <ul id="stat_inprogress" class="connectedSortable">
+            <li class="ui-state-default">in progress Item</li>
+            <li class="ui-state-default">Item 2</li>
+            <li class="ui-state-default">Item 3</li>
+            <li class="ui-state-default">Item 4</li>
+            <li class="ui-state-default">Item 5</li>
+        </ul>
+        </section> 
+        
+        <section class="cardList">  
+        <h3>--REVIEW--</h3>
+        <ul id="stat_review" class="connectedSortable">
+            <li class="ui-state-default">review Item 1</li>
+            <li class="ui-state-default">Item 2</li>
+            <li class="ui-state-default">Item 3</li>
+            <li class="ui-state-default">Item 4</li>
+            <li class="ui-state-default">Item 5</li>
+        </ul>
+        </section>
+        
+        <section class="cardList">
+        <h3>--DONE--</h3>
+        <ul id="stat_done" class="connectedSortable">
+            <li class="ui-state-default">done Item 1</li>
+            <li class="ui-state-default">Item 2</li>
+            <li class="ui-state-default">Item 3</li>
+            <li class="ui-state-default">Item 4</li>
+            <li class="ui-state-default">Item 5</li>
+        </ul>
+        </section>
+        <div class="clr"></div>
+    </div>
 
 <!--•••••••••••• HEADER ••••••••••••-->
 
@@ -21,63 +71,6 @@
     <p>Your cards</p>
 </div>
 
-<!--•••••••••••• BOARDS ••••••••••••-->
-
-<div id="board_container">
-    <table>
-        <tr>
-            <td>
-                <a class="article" href="http://google.com">
-                    <img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" />
-                    <h2>Cursus cursus proin auctor in in ac, nunc, tortor
-                        Cursus cursus proin auctor in in ac, nunc, tortor
-                        Cursus cursus proin auctor in in ac, nunc, tortor
-                        Cursus cursus proin auctor in in ac, nunc, tortor</h2>
-                </a>
-
-                <a class="article" href="http://google.com">
-                    <img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" />
-                    <h2>Cursus cursus proin auctor in in ac, nunc, tortor
-                        Cursus cursus proin auctor in in ac, nunc, tortor
-                        Cursus cursus proin auctor in in ac, nunc, tortor
-                        Cursus cursus proin auctor in in ac, nunc, tortor</h2>
-                </a>
-            </td>
-            <td>
-                <a class="article" href="http://google.com">
-                    <img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" />
-                    <h2>Cursus cursus proin auctor in in ac, nunc, tortor</h2>
-                </a>
-
-                <a class="article" href="http://google.com">
-                    <img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" />
-                    <h2>Cursus cursus proin auctor in in ac, nunc, tortor
-                        Cursus cursus proin auctor in in ac, nunc, tortor
-                        Cursus cursus proin auctor in in ac, nunc, tortor
-                        Cursus cursus proin auctor in in ac, nunc, tortor</h2>
-                </a>
-            </td>
-            <td>
-                <a class="article" href="http://google.com">
-                    <img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" />
-                </a>
-
-                <a class="article" href="http://google.com">
-                    <img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" />
-                    <h2>Cursus cursus proin auctor in in ac, nunc, tortor</h2>
-                </a>
-
-                <a class="article" href="http://google.com">
-                    <img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" />
-                    <h2>Cursus cursus proin auctor in in ac, nunc, tortor
-                        Cursus cursus proin auctor in in ac, nunc, tortor
-                        Cursus cursus proin auctor in in ac, nunc, tortor
-                        Cursus cursus proin auctor in in ac, nunc, tortor</h2>
-                </a>
-            </td>
-        </tr>
-    </table>
-</div>
 
 <!--•••••••••••• FOOTER ••••••••••••-->
 
@@ -87,3 +80,4 @@
 
 </body>
 </html>
+

@@ -20,16 +20,16 @@ $(document).ready(function () {
     var status_finder = function (status, title) {
         switch (status) {
             case "new":
-                $("#new").append('<li id="li1">' + title + '</li>');
+                $("#stat_new").append('<li id="li1" class="ui-state-default">' + title + '</li>');
                 break;
             case "in-progress":
-                $("#in-progress").append('<li id="li1">' + title + '</li>');
+                $("#stat_inprogress").append('<li id="li1" class="ui-state-default">' + title + '</li>');
                 break;
             case "review":
-                $("#review").append('<li id="li1">' + title + '</li>');
+                $("#stat_review").append('<li id="li1" class="ui-state-default">' + title + '</li>');
                 break;
             case "done":
-                $("#done").append('<li id="li1">' + title + '</li>');
+                $("#stat_done").append('<li id="li1" class="ui-state-default">' + title + '</li>');
                 break;
         }
     };
@@ -76,10 +76,9 @@ $(document).ready(function () {
                     if (!click) {
                         $('#back_layer').addClass('show_bl');
                         $('back_layer').css('opacity', '0');
-                        $('#task_table').empty();
-
-                        $('#task_table').append($('<h1>' + local_obj[i].title + '</h1></br><p class="underline"><input type="text" id="card_text" placeholder="task title"></p></br><button id="card_add" class="' + obj_id + '">save</button>'));
-                        $('#task_table').append($('<ul id="sortable" class="article"><div id="new" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>New Cards</label></div><div id="review" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Review</label></div><div id="in-progress" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>In progress</label></div><div id="done" class="cards col-lg-4 col-md-4 col-sm-4 col-xs-4"><label>Done</label></div></ul>'));
+                        $('.ui-state-default').empty();
+                        $('#taskTitle').empty();
+                        $('#taskTitle').append($('<h1>' + local_obj[i].title + '</h1><button id="card_add" class="' + obj_id + '">Create Card!</button><input type="text" id="card_text" placeholder="Task title" >'));
                         for (var j = 0; j < local_obj[i].cards.length; j++) {
                             status_finder(local_obj[i].cards[j].status, local_obj[i].cards[j].title)
                         }
@@ -107,7 +106,6 @@ $(document).ready(function () {
 
     var divClicked = function () {
         var text = $(this).text();
-        alert(this);
         var length = text.length;
         var editableText = $("<textarea />");
         editableText.val(text);
@@ -179,6 +177,12 @@ $(document).ready(function () {
         this.title = title;
         this.status = "new";
     };
+
+    //-----for the sortable cards-------
+    $( "#stat_new, #stat_inprogress, #stat_review, #stat_done"  ).sortable({
+      connectWith: ".connectedSortable"
+      }).disableSelection();
+
 
     var main = function () {
         $('#task_table').hide();

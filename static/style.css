@@ -279,6 +279,48 @@ li{
     font-size: 14px !important;
 }
 
+
+/*-----for the sortable cards-------*/
+.cardsContainer {
+    /*font-family: Raleway;*/
+    margin: 5px auto;
+    display: block;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.clr {
+    clear:both;
+    font-size:0;
+    border: none;
+}
+
+#stat_new, #stat_inprogress, #stat_review, #stat_done {
+    
+    border: 1px solid blue;
+    width: 150px;
+    min-height: 20px;
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 0 0 0;
+    float: left;
+    margin-right: 10px;
+}
+
+#stat_new li, #stat_inprogress li, #stat_review li, #stat_done li {
+    
+    margin: 0 5px 5px 5px;
+    padding: 5px;
+    font-size: 1.2em;
+    width: 120px;
+}
+
+
+.cardList {
+    display: inline-block;
+}
+/*--------end of cards--------*/
+
 #newboard-button{
     padding: 0px 0px;
     width: 60px;
@@ -362,3 +404,4 @@ li{
 }
 
 p{font-weight: 600;}
+
