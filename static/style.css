@@ -3,7 +3,7 @@
   src: url(https://fonts.googleapis.com/css?family=Raleway);
 }
 
-*{margin:0; padding:0;}
+*{margin:0; padding:0; text-align: center;}
 
 #sortable {
     list-style-type: none; 
@@ -89,23 +89,25 @@ div[id=title] {
 div[id=board_container] {
     border-collapse: separate;
     border-spacing: 13px 13px;
-    margin-right: 3px;
     margin:auto;
     width:80%;
     padding: 3px;
+    display: inline-block;
     }
 
-div[id=card_body]{margin:2px auto; text-align: center;}
+div[id=card_body]{margin:2px auto; text-align: center; display: inline-block;}
 
 
 #row entry-row{
     width:60%;
     margin:0 auto;
+    display: inline-block;
     }
 
 table {
     border-collapse: separate;
     border-spacing: 13px 13px;
+    display: inline-block;
 }
 
 td{vertical-align: top;}
@@ -117,7 +119,7 @@ h2{
 }
 
 [id^=bc]{
-    display: block;
+    display: inline-block;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.07);
     border-radius: 3px;
@@ -136,6 +138,7 @@ h2{
 }
 
 [class^=cards]{
+    display: inline-block;
     width:22.9%;
     margin:2px auto;
 }
@@ -278,6 +281,7 @@ tr td{
     max-height: 70%;
     overflow-y: scroll;
 }
+
 .no_display{
     display: block;
 }
