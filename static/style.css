@@ -33,10 +33,7 @@ h1 {
     font-weight: 200;
 }
 
-.entry-row{
-    height: auto;
-
-}
+.entry-row{height: auto;}
 
 body {
     background-image: url("bg.png");
@@ -61,7 +58,6 @@ div {
     padding:5px;
     alignment:center;
     width:60%;
-
 }
 
 /*---------------------------------------------------------------------------------------------------*/
@@ -99,9 +95,7 @@ div[id=board_container] {
     padding: 3px;
     }
 
-div[id=card_body]{
-    margin:2px auto;
-}
+div[id=card_body]{margin:2px auto; text-align: center;}
 
 
 #row entry-row{
@@ -114,9 +108,7 @@ table {
     border-spacing: 13px 13px;
 }
 
-td{
-    vertical-align: top;
-}
+td{vertical-align: top;}
 
 h2{
     margin-top: 10px;
@@ -133,7 +125,7 @@ h2{
     margin:2px auto;
     margin-right:10px;
     margin-bottom: 8px;
-    width:31.9%;
+    width:32.343%;
     min-width: 250px;
 }
 
@@ -285,7 +277,6 @@ tr td{
     height: auto;
     max-height: 70%;
     overflow-y: scroll;
-
 }
 .no_display{
     display: block;
@@ -364,6 +355,7 @@ li{
 .underline {
     display: inline-block;
 }
+
 .underline:after {
     content: '';
     display: block;
