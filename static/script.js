@@ -230,7 +230,6 @@ $(document).ready(function () {
                 async:false,
                 url: "/create_board",
                 success: function (response) {
-                    alert("succesfully saved to database!");
                     strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + board.id + '">' +
                                         '<p id="image_">' +
                                         '<img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p>' +
@@ -279,7 +278,6 @@ $(document).ready(function () {
                 async:false,
                 dataType:"json",
                 success:function (response) {
-                    alert("Nice!!")
                     answer= response
 
                 },
@@ -298,7 +296,7 @@ $(document).ready(function () {
                 data:{'card':JSON.stringify(retrievedObject)},
                 url:"/save_card",
                 success:function () {
-                    alert("Success on saving this card!")
+                    console.log("Success on saving this card!")
 
                 },
                 error:function () {

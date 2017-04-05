@@ -58,7 +58,6 @@ def get_cards():
 @app.route("/get_card",methods=["POST"])
 def get_card():
     board_id=request.form['id']
-
     strng=Boards.select().where(Boards.id==board_id)
     board={'id':strng[0].id,'title':strng[0].title,'cards':strng[0].cards}
     return json.dumps(board)
