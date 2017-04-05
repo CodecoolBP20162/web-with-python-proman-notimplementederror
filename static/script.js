@@ -134,7 +134,7 @@ $(document).ready(function () {
         $(viewableText).click(divClicked);
     };
 
-        $(document).click(function () {
+        $('[id^="bc"]').click(function () {
             if (click) {
                 if (this.id != '#task_table') {
                     $("#task_table").show();
