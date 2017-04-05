@@ -221,12 +221,6 @@ $(document).ready(function () {
     });
     
 
-    //-----droppable-------
-    // $( ".connectedSortable" ).draggable();
-    // $( ".connectedSortable" ).droppable({
-    //   drop: function( event, ui ) {}
-    // });
-
 
     var main = function () {
         $('#task_table').hide();
