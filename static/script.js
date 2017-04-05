@@ -316,7 +316,7 @@ $(document).ready(function () {
     //-----sortable-------
     $(".connectedSortable").sortable({
         connectWith: ".connectedSortable",
-        receive: function(event, ui) {
+        receive: function(event, ui) { 
             ui.item.text('Dropped into '+ this.id.substr(5));   // changes the dropped card's text
     }
     });
