@@ -1,4 +1,6 @@
 from flask import Flask, request, g, redirect, url_for, render_template, session
+import os
+import psycopg2
 
 app = Flask(__name__)
 app.config.from_object(__name__)

@@ -1,5 +1,11 @@
+@font-face {
+  font-family: "Raleway";
+  src: url(https://fonts.googleapis.com/css?family=Raleway);
+}
 
-#sortable { 
+*{margin:0; padding:0;}
+
+#sortable {
     list-style-type: none; 
     margin: 5px auto;
     padding: 0; 
@@ -45,41 +51,46 @@ body {
     display: none;
 }
 
-
-@font-face {
-  font-family: "Raleway";
-  src: url(https://fonts.googleapis.com/css?family=Raleway);
-}
-
-*{margin:0; padding:0;}
-
 a{text-decoration:none; color:black;}
 a:hover{text-decoration: none; color: black;}
 
 div {
     margin: 10px auto;
-    font-face: "Raleway";
+    font-family: "Raleway";
     text-align: center;
     padding:5px;
     alignment:center;
-    width:600px;
+    width:60%;
 
+}
+
+/*---------------------------------------------------------------------------------------------------*/
+/*••••••••••••NAVBAR•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••*/
+/*---------------------------------------------------------------------------------------------------*/
+
+div[id=navbar]{
+    position: fixed;
+    left: 0;
+    top:-10px;
+    width: 100%;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.97);
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
 /*••••••••••••HEADER••••••••••••*/
 
 div[id=title] {
-    margin-top: 30px;
     font-weight: 200;
     font-size: 70px;
-    color: black
+    color: black;
+    width: 60%;
+    margin-top: 40px;
     }
 
 /*••••••••••••BOARDS••••••••••••*/
 
 div[id=board_container] {
-    margin-top: 100px;
-    color:black;
     border-collapse: separate;
     border-spacing: 13px 13px;
     margin-right: 3px;
@@ -94,7 +105,7 @@ div[id=card_body]{
 
 
 #row entry-row{
-    width:600px;
+    width:60%;
     margin:0 auto;
     }
 
@@ -108,46 +119,35 @@ td{
 }
 
 h2{
+    margin-top: 10px;
     text-align:center;
     font-size:14px;
-    margin: 0 0 12px 0;
-  }
+}
 
 [id^=bc]{
     display: block;
     padding: 10px;
-    background-color: transparent;
-    border: 3px solid black;
+    background-color: rgba(0, 0, 0, 0.07);
     border-radius: 3px;
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.4);
     transition: all 220ms;
     margin:2px auto;
     margin-right:10px;
+    margin-bottom: 8px;
     width:31.9%;
+    min-width: 250px;
 }
 
-[class^=cards]{
-    width:22.9%;
-     margin:2px auto;
-}
 [id^=bc]:hover {
-    box-shadow: 0px 2px 3px 1px #333333;
+    box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
     transform : translateY(-5px);
     transition:all 220ms;
 }
 
-.c_b {  
-    float: right;
-    text-align: right;
-    padding: 5px;   
+[class^=cards]{
+    width:22.9%;
+    margin:2px auto;
 }
 
-.c_c {
-    clear: both;
-    padding: 4px;
-    text-align:justify;
-    font-size:16px;
-}
 
 img{
     display:block;
@@ -157,30 +157,45 @@ img{
 
 /*••••••••••••BUTTONS•••••••••••*/
 
+.fa{
+    color: #262626;
+}
+
 .mod {
-    display: inline-block;
-    -webkit-transform: perspective(1px) translateZ(0);
-    transform: perspective(1px) translateZ(0);
+    display: block;
+    -webkit-transform: perspective(1px) translateZ(0) scale(0.8);
+    transform: perspective(1px) translateZ(0) scale(0.8);
     -webkit-transition-duration: 0.3s;
     transition-duration: 0.3s;
     -webkit-transition-property: transform;
     transition-property: transform;
 
     position:fixed !important;
-    right: 50px;
-    width: 50px;
-    height: 50px;
+    right: 4%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+
+    font-family: "Comfortaa";
+    font-size: 50px;
+
+    border-radius: 100%;
+    background-color: rgba(0, 0, 0, 0.04);
+    box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
     }
 
 .mod:hover {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+    box-shadow: 0px 2px 6px 1px rgba(0, 0, 0, 0.2);
     }
 
-
-.up{bottom: 110px;}
-.add{bottom: 50px;
-}
+.add{
+    bottom: 20px;
+    line-height: 55px;}
+.up{
+    bottom: 80px;
+    line-height: 78px;}
 
 
 /*••••••••••••FOOTER••••••••••••*/
@@ -190,34 +205,20 @@ div[id=footer] {
     color: black;
     }
 
-#add {
-    border: none;
-    background-image: url("add.png");
-    position: fixed;
-    bottom: 70px;
-    right: 100px;
-    width: 70px;
-    height: 70px;
-    cursor: pointer;
-}
-
 #input_fields{
     position: fixed;
-    bottom: 260px;
-    right: 180px;
-    width: 50px;
-    height: 70px;
+    width: 40%;
+    min-width: 430px;
+    bottom: 100px;
+    right: 4.4%;
+    height: 200px;
     display: none;
 }
 
 #inputs{
-    width:200px;
-    transform: translateZ(100px);
-    position: fixed;
-    background-color: #ececec;
-    border: 3px solid #eb586b;
-    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.7);
-    border-radius: 7px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 3px 3px 6px 1px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
     height: auto;
 }
 
@@ -251,24 +252,22 @@ tr td{
 }
 
 #back_layer{
-
     width: 100%;
     height: 100%;
     margin:0 auto;
+    margin-top: 50px;
 }
 
 #task_table{
-    transform: translateZ(100px);
     position: fixed;
-    top:25%;
-    left:25%;
-    width: 50%;
-    background-color: #ececec;
-    border: 3px solid #eb586b;
-    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.7);
-    border-radius: 7px;
+    top:20%;
+    left:20%;
+    width: 60%;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0px 2px 3px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
     height: auto;
-    max-height: 50%;
+    max-height: 70%;
     overflow-y: scroll;
 
 }
@@ -279,3 +278,130 @@ tr td{
 li{
     font-size: 14px !important;
 }
+
+
+/*-----for the sortable cards-------*/
+.cardsContainer {
+    /*font-family: Raleway;*/
+    margin: 5px auto;
+    display: block;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.clr {
+    clear:both;
+    font-size:0;
+    border: none;
+}
+
+#stat_new, #stat_inprogress, #stat_review, #stat_done {
+    
+    border: 1px solid blue;
+    width: 150px;
+    min-height: 20px;
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 0 0 0;
+    float: left;
+    margin-right: 10px;
+}
+
+#stat_new li, #stat_inprogress li, #stat_review li, #stat_done li {
+    
+    margin: 0 5px 5px 5px;
+    padding: 5px;
+    font-size: 1.2em;
+    width: 120px;
+}
+
+
+.cardList {
+    display: inline-block;
+}
+/*--------end of cards--------*/
+
+#newboard-button{
+    padding: 0px 0px;
+    width: 60px;
+    border: 1px solid #222222;
+    border-radius: 3px;
+    background-color: transparent;
+    outline: none;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    text-align: center;
+
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+}
+
+#newboard-button:hover{
+    background-color: #222222;
+    font-weight: 100;
+    color: white;
+}
+
+#newboard-input{
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-weight: 100;
+    text-align: center;
+}
+
+#card_text {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-weight: 100;
+    text-align: center;
+}
+
+#card_add {
+    padding: 0px 15px;
+    border: 1px solid #222222;
+    border-radius:3px;
+    background-color: transparent;
+    outline: none;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    font-size: 14px;
+
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+}
+#card_add:hover {
+    background-color: #222222;
+    font-weight: 100;
+    color: white;
+}
+
+.underline {
+    display: inline-block;
+}
+.underline:after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 0;
+    background: transparent;
+    transition: width .5s ease, background-color .5s ease;
+}
+.underline:hover:after {
+    width: 100%;
+    background: black;
+}
+
+p{font-weight: 600;}
+
