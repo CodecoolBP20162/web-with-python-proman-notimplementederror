@@ -299,11 +299,7 @@ $(document).ready(function () {
 
         }
 
-
         }
-
-
-
 
     //-----for the sortable cards-------
     $( "#stat_new, #stat_inprogress, #stat_review, #stat_done"  ).sortable({
