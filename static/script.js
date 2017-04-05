@@ -73,7 +73,6 @@ $(document).ready(function () {
         $('[id^="bc"]').live('click', function () {
             obj_id = this.id.toString();
             obj_id = obj_id.substr(2);
-            console.log(local_obj)
             for (var i = 0; i < local_obj.length; i++) {
                 if (local_obj[i].id.toString() === obj_id) {
                     if (!click) {
@@ -88,7 +87,6 @@ $(document).ready(function () {
                             '<input type="text" id="card_text" placeholder="Task title" >'));
                         var card_splitter=local_obj[i].cards.split('|')
                         for (var j = 0; j < card_splitter.length-1; j++) {
-                            console.log(card_splitter[j])
                             row = JSON.parse(card_splitter[j]);
                             fillTaskListByStatus(row.status, row.title)
                         }
@@ -316,7 +314,8 @@ $(document).ready(function () {
     //-----sortable-------
     $(".connectedSortable").sortable({
         connectWith: ".connectedSortable",
-        receive: function(event, ui) { 
+        receive: function(event, ui) {
+            console.log(ui);
             ui.item.text('Dropped into '+ this.id.substr(5));   // changes the dropped card's text
     }
     });
