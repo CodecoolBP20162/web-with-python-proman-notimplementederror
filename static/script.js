@@ -212,10 +212,20 @@ $(document).ready(function () {
     }
 
 
-    //-----for the sortable cards-------
-    $("#stat_new, #stat_inprogress, #stat_review, #stat_done").sortable({
-        connectWith: ".connectedSortable"
-    }).disableSelection();
+    //-----sortable-------
+    $(".connectedSortable").sortable({
+        connectWith: ".connectedSortable",
+        receive: function(event, ui) {
+            ui.item.text('Dropped into '+ this.id.substr(5));   // changes the dropped card's text
+    }
+    });
+    
+
+    //-----droppable-------
+    // $( ".connectedSortable" ).draggable();
+    // $( ".connectedSortable" ).droppable({
+    //   drop: function( event, ui ) {}
+    // });
 
 
     var main = function () {
