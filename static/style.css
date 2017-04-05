@@ -281,12 +281,15 @@ li{
 
 
 /*-----for the sortable cards-------*/
+
+h3{font-size: 15px; font-weight: 600;}
+
 .cardsContainer {
     /*font-family: Raleway;*/
     margin: 5px auto;
     display: block;
     width: 100%;
-    border: 1px solid black;
+    border: none;
 }
 
 .clr {
@@ -296,8 +299,7 @@ li{
 }
 
 #stat_new, #stat_inprogress, #stat_review, #stat_done {
-    
-    border: 1px solid blue;
+    border: 1px solid #999999;
     width: 150px;
     min-height: 20px;
     list-style-type: none;
@@ -308,7 +310,6 @@ li{
 }
 
 #stat_new li, #stat_inprogress li, #stat_review li, #stat_done li {
-    
     margin: 0 5px 5px 5px;
     padding: 5px;
     font-size: 1.2em;
@@ -317,6 +318,7 @@ li{
 
 
 .cardList {
+    text-align: center;
     display: inline-block;
 }
 /*--------end of cards--------*/

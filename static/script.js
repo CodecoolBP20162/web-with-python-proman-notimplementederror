@@ -81,7 +81,7 @@ $(document).ready(function () {
                         $('back_layer').css('opacity', '0');
                         $('.ui-state-default').empty();
                         $('#taskTitle').empty();
-                        $('#taskTitle').append($('<h1>' + local_obj[i].title + '</h1><button id="card_add" class="' + obj_id + '">Create Card!</button><input type="text" id="card_text" placeholder="Task title" >'));
+                        $('#taskTitle').append($('<h1>' + local_obj[i].title + '</h1></br><p class="underline"><input type="text" id="card_text" placeholder="task title" ></p></br><button id="card_add" class="' + obj_id + '">create card</button>'));
                         for (var j = 0; j < local_obj[i].cards.length; j++) {
                             fillTaskListByStatus(local_obj[i].cards[j].status, local_obj[i].cards[j].title)
                         }
