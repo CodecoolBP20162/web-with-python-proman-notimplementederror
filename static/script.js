@@ -1,11 +1,14 @@
 $(document).ready(function () {
 
-        String.prototype.format = function () {
-        var args = [].slice.call(arguments);
-        return this.replace(/(\{\d+\})/g, function (a){
-            return args[+(a.substr(1,a.length-2))||0];
+    String.prototype.format = function () {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function (match, number) {
+            return typeof args[number] != 'undefined'
+                ? args[number]
+                : match
+                ;
         });
-        }
+    };
 
     var local_obj = [];
     var click = true;
@@ -13,10 +16,11 @@ $(document).ready(function () {
     var count_task = 0;
     var count_id = 0;
     var board = new Boards('sample');
-    var task= new Tasks('sample');
+    var task = new Tasks('sample');
 
 
-    var factory = function (obj, title) {
+    // makes either a Board or a Task Card
+    var boardTaskFactory = function (obj, title) {
         if (obj == "card") {
             return new Tasks(title);
         }
@@ -28,8 +32,8 @@ $(document).ready(function () {
         }
     };
 
-    var status_finder = function (status, title) {
-        console.log(status)
+    // sorts the tasks into their status group (new, in-progress, review, done)
+    var fillTaskListByStatus = function (status, title) {
         switch (status) {
             case "new":
                 $("#stat_new").append('<li id="li1" class="ui-state-default">' + title + '</li>');
@@ -46,25 +50,11 @@ $(document).ready(function () {
         }
     };
 
-    //"string{0}".format(variable)
-    var stringFormat = function () {
-        if (!String.prototype.format) {
-            String.prototype.format = function () {
-                var args = arguments;
-                return this.replace(/{(\d+)}/g, function (match, number) {
-                    return typeof args[number] != 'undefined'
-                        ? args[number]
-                        : match
-                        ;
-                });
-            };
-        }
-    };
-
-    //At start, load all item from storage, and fill boards
+    // at start, load all item from storage, and fill boards
     var boardLoader = function () {
         board.get_cards();
     };
+
 
     //When clicked on, adds a new boards with inputted text
         $('#newboard-button').click(function (event) {
@@ -72,14 +62,18 @@ $(document).ready(function () {
             board.createBoard();
         });
 
+
+    // opens and closes the new board pop-up when the plus button is clicked
         $('.add').click(function () {
             $('#input_fields').toggle();
         });
 
-    //When clicked on, cards slide down, everything gets blurry
+
+    // fills up the task table pop up with the correct title, input, tasks, etc.
         $('[id^="bc"]').live('click', function () {
             obj_id = this.id.toString();
             obj_id = obj_id.substr(2);
+            console.log(local_obj)
             for (var i = 0; i < local_obj.length; i++) {
                 if (local_obj[i].id.toString() === obj_id) {
                     if (!click) {
@@ -87,13 +81,16 @@ $(document).ready(function () {
                         $('back_layer').css('opacity', '0');
                         $('.ui-state-default').empty();
                         $('#taskTitle').empty();
-                        $('#taskTitle').append($('<h1>' + local_obj[i].title + '</h1><button id="card_add" class="' + obj_id + '">Create Card!</button><input type="text" id="card_text" placeholder="Task title" >'));
+                        $('#stat_new').empty();
+                        $('#taskTitle').append($('' +
+                            '<h1>' + local_obj[i].title + '</h1>' +
+                            '<button id="card_add" class="' + obj_id + '">Create Card!</button>' +
+                            '<input type="text" id="card_text" placeholder="Task title" >'));
                         var card_splitter=local_obj[i].cards.split('|')
                         for (var j = 0; j < card_splitter.length-1; j++) {
                             console.log(card_splitter[j])
-                            row=JSON.parse(card_splitter[j]);
-                            console.log(row)
-                            status_finder(row.status, row.title)
+                            row = JSON.parse(card_splitter[j]);
+                            fillTaskListByStatus(row.status, row.title)
                         }
 
                     } else {
@@ -104,43 +101,49 @@ $(document).ready(function () {
             click = !click;
         });
 
+    // when the create card button is clicked in the task pop-up
+    // a new task is created and pushed into the local storage
         $('#card_add').live('click', function (event) {
             event.preventDefault();
             var card = $('#card_text').val();
-            status_finder("new", card);
+            fillTaskListByStatus("new", card);
             var task=new Tasks('sample');
             var retrievedObject = task.get_card(this.getAttribute('class'));
-            var task = factory("card", card);
+            var task = boardTaskFactory("card", card);
             retrievedObject.cards+=JSON.stringify(task);
-            console.log(retrievedObject)
             task.save_card(retrievedObject)
         });
 
-    var divClicked = function () {
+    // when a task is clicked, an editable textarea gets created
+    var createTextareaInsteadListItem = function () {
         var text = $(this).text();
         var length = text.length;
         var editableText = $("<textarea />");
         editableText.val(text);
         $(this).replaceWith(editableText);
         editableText.focus();
-        editableText.blur(editableTextBlurred);
+        editableText.blur(saveTextareaValueIntoListItem);
     };
 
-    var editableTextBlurred = function () {
+    // saves textarea value into the html
+    var saveTextareaValueIntoListItem = function () {
         var html = $(this).val();
         var viewableText = $("<li id='li1'>");
         viewableText.html(html);
         $(this).replaceWith(viewableText);
-        $(viewableText).click(divClicked);
+        $(viewableText).click(createTextareaInsteadListItem);
     };
 
-        $('[id^="bc"]').click(function () {
+
+        $(document).click(function () {
             if (click) {
                 if (this.id != '#task_table') {
                     $("#task_table").show();
                 }
             } else {
                 $('#task_table').hide();
+
+
 
             }
         });
@@ -152,16 +155,14 @@ $(document).ready(function () {
         this.state = new SQLstorage()
         this.get_cards = function () {
             this.state.get_cards()
-        }
+        };
 
         this.createBoard = function () {
             this.state.createBoard();
         }
+    }
 
-
-    };
-
-        function Tasks(title) {
+    function Tasks(title) {
         count_task++;
         task_id = 'task{0}'.format(count_task);
         this.id = task_id;
@@ -174,42 +175,43 @@ $(document).ready(function () {
         this.save_card=function(retrieved){
             this.state.save_card(retrieved)
         }
-    };
+    }
 
     function LocalStorage() {
         this.createBoard = function () {
             count_board++;
             var text = $('#newboard-input').val();
-            var board = factory("board", text);
+            var board = boardTaskFactory("board", text);
             local_obj.push(board);
             localStorage.setItem(board.id, JSON.stringify(board));
             strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + retrievedObject.id + '">' +
-                        '<p>' +
-                        '<img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" />' + '</p>' +
-                        '<p id=title>Title</p>' +
-                    '</div>';
+                '<p>' +
+                '<img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" />' + '</p>' +
+                '<p id=title>Title</p>' +
+                '</div>';
 
             $(strng).text(board.title).appendTo(".row");
-        }
+        };
         this.get_cards = function () {
             for (i in localStorage) {
                 var retrievedObject = localStorage.getItem(i);
                 retrievedObject = JSON.parse(retrievedObject);
+
                 local_obj.push(retrievedObject);
                 strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + retrievedObject.id + '">' +
-                            '<p id="image_">' +
-                            '<img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p>' +
-                            '<p id=title>' + retrievedObject.title + '</p>' +
+                    '<p id="image_">' +
+                    '<img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p>' +
+                    '<p id=title>' + retrievedObject.title + '</p>' +
                     '   </div>';
                 $(strng).appendTo(".row");
                 count_id++;
             }
         };
 
-        this.get_card=function (id) {
+        this.get_card = function (id) {
             return localStorage.getItem(id)
-        }
-        this.save_card=function (retrievedObject) {
+        };
+        this.save_card = function (retrievedObject) {
             localStorage.setItem(retrievedObject.id, JSON.stringify(retrievedObject));
 
         }
@@ -220,7 +222,7 @@ $(document).ready(function () {
 
             count_board++;
             var text = $('#newboard-input').val();
-            var board = factory("board", text);
+            var board = boardTaskFactory("board", text);
             local_obj.push(board);
 
             $.ajax({
@@ -257,6 +259,7 @@ $(document).ready(function () {
                                         '<p id=title>' + response[i].title + '</p>' +
                                 '   </div>';
                            $(strng).appendTo(".row");
+
                            local_obj.push(response[i]);
                            count_id++;
                        }
@@ -311,19 +314,17 @@ $(document).ready(function () {
         }
 
     //-----for the sortable cards-------
-    $( "#stat_new, #stat_inprogress, #stat_review, #stat_done"  ).sortable({
-      connectWith: ".connectedSortable"
-      }).disableSelection();
+    $("#stat_new, #stat_inprogress, #stat_review, #stat_done").sortable({
+        connectWith: ".connectedSortable"
+    }).disableSelection();
 
-    $('#li1').live('click', divClicked);
-
+    //$('#li1').live('click', divClicked);
+    //$('#li1').live('click', createTextareaInsteadListItem);
     var main = function () {
         $('#task_table').hide();
-        stringFormat();
         boardLoader();
-        //$('#li1').live('click', divClicked);
-    };
 
+    };
 
 
     main();
