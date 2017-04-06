@@ -66,7 +66,7 @@ def get_card():
 def save_card():
     card=request.form['card']
     dict_card=ast.literal_eval(card)
-    model=Boards.select().where(Boards.id==dict_card['id']).get()
+    model=Boards.select().where(int(Boards.id)==int(dict_card['id'])).get()
     model.cards +=dict_card['cards'] + "|"
     model.save()
     return json.dumps({"status":"OK"})
