@@ -1,0 +1,16 @@
+#stat_new li {
+    
+    background-color: blueviolet;
+}
+
+#stat_inprogress li {
+    background-color: yellow;
+}
+
+#stat_review li {
+    background-color: orangered;
+}
+
+#stat_done li {
+    background-color: green;
+}
