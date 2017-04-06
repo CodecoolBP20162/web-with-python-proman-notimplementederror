@@ -310,9 +310,12 @@ $(document).ready(function () {
     $(".connectedSortable").sortable({
         connectWith: ".connectedSortable",
         receive: function(event, ui) {
-            console.log(ui);
-            ui.item.text('Dropped into '+ this.id.substr(5));   // changes the dropped card's text
-    }
+            //console.log(ui.item);
+            if (this.id === "stat_new") {console.log('Dropped into '+ this.id);} 
+            else if (this.id === "stat_inprogress") {console.log('Dropped into '+ this.id);}
+            else if (this.id === "stat_review") {console.log('Dropped into '+ this.id);}
+            else if (this.id === "stat_done") {console.log('Dropped into '+ this.id);}
+        }
     });
     
 
