@@ -218,9 +218,10 @@ $(document).ready(function () {
         receive: function(event, ui) {
             //console.log(ui.item);
             ui.item.text('Dropped into '+ this.id.substr(5));  // changes the dropped card's text
-            if (this.id === "stat_inprogress") {
-                
-            }
+            if (this.id === "stat_new") {} 
+            else if (this.id === "stat_inprogress") {console.log(ui.id);}
+            else if (this.id === "stat_review") {}
+            else if (this.id === "stat_done") {}
         }
     });
     
