@@ -340,8 +340,6 @@ $(document).ready(function () {
     });
     
 
-    //$('#li1').live('click', divClicked);
-    //
     var main = function () {
 
         $('#task_table').hide();
