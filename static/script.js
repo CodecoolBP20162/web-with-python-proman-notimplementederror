@@ -55,22 +55,21 @@ $(document).ready(function () {
         board.get_cards();
     };
 
-    // when clicked on, adds a new boards with inputted text
-    var saveNewBoardButton = function () {
-        $('#newboard-button').click(function () {
+
+    //When clicked on, adds a new boards with inputted text
+        $('#newboard-button').click(function (event) {
+            event.preventDefault();
             board.createBoard();
         });
-    };
+
 
     // opens and closes the new board pop-up when the plus button is clicked
-    var plusButton = function () {
         $('.add').click(function () {
             $('#input_fields').toggle();
         });
-    };
+
 
     // fills up the task table pop up with the correct title, input, tasks, etc.
-    var taskPopUpFiller = function () {
         $('[id^="bc"]').live('click', function () {
             obj_id = this.id.toString();
             obj_id = obj_id.substr(2);
@@ -81,9 +80,12 @@ $(document).ready(function () {
                         $('back_layer').css('opacity', '0');
                         $('.ui-state-default').empty();
                         $('#taskTitle').empty();
-                        $('#taskTitle').append($('<h1>' + local_obj[i].title + '</h1><button id="card_add" class="' + obj_id + '">Create Card!</button><input type="text" id="card_text" placeholder="Task title" >'));
-                        for (var j = 0; j < local_obj[i].cards.length; j++) {
-                            fillTaskListByStatus(local_obj[i].cards[j].status, local_obj[i].cards[j].title)
+                        $('#stat_new').empty();
+                        $('#taskTitle').append($('<h1>' + local_obj[i].title + '</h1></br><p class="underline"><input type="text" id="card_text" placeholder="task title" ></p></br><button id="card_add" class="' + obj_id + '">create card</button>'));
+                        var card_splitter=local_obj[i].cards.split('|')
+                        for (var j = 0; j < card_splitter.length-1; j++) {
+                            row = JSON.parse(card_splitter[j]);
+                            fillTaskListByStatus(row.status, row.title)
                         }
 
                     } else {
@@ -93,21 +95,19 @@ $(document).ready(function () {
             }
             click = !click;
         });
-    };
 
     // when the create card button is clicked in the task pop-up
     // a new task is created and pushed into the local storage
-    var createNewTaskButton = function () {
-        $('#card_add').live('click', function () {
+        $('#card_add').live('click', function (event) {
+            event.preventDefault();
             var card = $('#card_text').val();
             fillTaskListByStatus("new", card);
+            var task=new Tasks('sample');
             var retrievedObject = task.get_card(this.getAttribute('class'));
             var task = boardTaskFactory("card", card);
-            retrievedObject = JSON.parse(retrievedObject);
-            retrievedObject.cards.push(task);
+            retrievedObject.cards+=JSON.stringify(task);
             task.save_card(retrievedObject)
         });
-    };
 
     // when a task is clicked, an editable textarea gets created
     var createTextareaInsteadListItem = function () {
@@ -129,7 +129,7 @@ $(document).ready(function () {
         $(viewableText).click(createTextareaInsteadListItem);
     };
 
-    var showHideTaskTable = function () {
+
         $(document).click(function () {
             if (click) {
                 if (this.id != '#task_table') {
@@ -138,15 +138,16 @@ $(document).ready(function () {
             } else {
                 $('#task_table').hide();
 
+
+
             }
         });
-    };
 
     function Boards(title) {
         this.id = count_id++;
         this.title = title;
         this.cards = [];
-        this.state = new LocalStorage();
+        this.state = new SQLstorage()
         this.get_cards = function () {
             this.state.get_cards()
         };
@@ -162,12 +163,12 @@ $(document).ready(function () {
         this.id = task_id;
         this.title = title;
         this.status = "new";
-        this.state = new LocalStorage();
-        this.get_card = function () {
-            this.state.get_card()
-        };
-        this.save_card = function () {
-            this.state.save_card()
+        this.state = new SQLstorage();
+        this.get_card = function(id){
+            return this.state.get_card(id)
+        }
+        this.save_card=function(retrieved){
+            this.state.save_card(retrieved)
         }
     }
 
@@ -177,7 +178,6 @@ $(document).ready(function () {
             var text = $('#newboard-input').val();
             var board = boardTaskFactory("board", text);
             local_obj.push(board);
-            console.log(board.id);
             localStorage.setItem(board.id, JSON.stringify(board));
             strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + retrievedObject.id + '">' +
                 '<p>' +
@@ -191,6 +191,7 @@ $(document).ready(function () {
             for (i in localStorage) {
                 var retrievedObject = localStorage.getItem(i);
                 retrievedObject = JSON.parse(retrievedObject);
+
                 local_obj.push(retrievedObject);
                 strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + retrievedObject.id + '">' +
                     '<p id="image_">' +
@@ -211,6 +212,99 @@ $(document).ready(function () {
         }
     }
 
+    function SQLstorage(){
+        this.createBoard=function() {
+
+            count_board++;
+            var text = $('#newboard-input').val();
+            var board = boardTaskFactory("board", text);
+            local_obj.push(board);
+
+            $.ajax({
+                type: 'POST',
+                data: {"id": JSON.stringify(board)},
+                dataType: "json",
+                async:false,
+                url: "/create_board",
+                success: function (response) {
+                    strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + board.id + '">' +
+                                        '<p id="image_">' +
+                                        '<img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p>' +
+                                        '<p id=title>' + board.title + '</p>' +
+                            '</div>';
+                    $(strng).appendTo(".row");
+                },
+                error: function () {
+                    alert("Error with this weird part!")
+
+                }
+            });
+        }
+        this.get_cards=function () {
+                $.ajax({
+                   type:'GET',
+                   url:'/get_cards',
+                    dataType:"json",
+                   success:function (response) {
+                       for(var i in response){
+                           strng = '<div class="boards col-lg-4 col-md-4 col-sm-4 col-xs-4" id="bc' + response[i].id + '">' +
+                                        '<p id="image_">' +
+                                        '<img src="https://c1.staticflickr.com/1/674/20942077784_5d3ffb2ed0_h.jpg" /></p>' +
+                                        '<p id=title>' + response[i].title + '</p>' +
+                                '   </div>';
+                           $(strng).appendTo(".row");
+
+                           local_obj.push(response[i]);
+                           count_id++;
+                       }
+                       
+                       
+                   },
+                   error:function () {
+                       alert("Not able to get cards!")
+                       
+                   } 
+                });
+            }
+            this.get_card=function (id) {
+            var answer;
+            $.ajax({
+                type:"POST",
+                url:"/get_card",
+                data:{"id":id},
+                async:false,
+                dataType:"json",
+                success:function (response) {
+                    answer= response
+
+                },
+                error:function () {
+                    alert("Error!")
+
+                }
+            });
+
+                return answer
+
+            }
+            this.save_card=function (retrievedObject) {
+            $.ajax({
+                type:"POST",
+                data:{'card':JSON.stringify(retrievedObject)},
+                url:"/save_card",
+                success:function () {
+                    console.log("Success on saving this card!")
+
+                },
+                error:function () {
+                    alert("Error!")
+
+                }
+            })
+
+        }
+
+        }
 
     //-----sortable-------
     $(".connectedSortable").sortable({
@@ -226,16 +320,12 @@ $(document).ready(function () {
     });
     
 
-
+    //$('#li1').live('click', divClicked);
+    //$('#li1').live('click', createTextareaInsteadListItem);
     var main = function () {
         $('#task_table').hide();
         boardLoader();
-        saveNewBoardButton();
-        plusButton();
-        taskPopUpFiller();
-        createNewTaskButton();
-        $('#li1').live('click', createTextareaInsteadListItem);
-        showHideTaskTable();
+
     };
 
 
