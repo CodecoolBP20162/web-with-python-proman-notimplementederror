@@ -4,7 +4,7 @@ import psycopg2
 import ast
 from conn import db_proxy,Boards
 import conn
-from playhouse.shortcuts import cast
+#from playhouse.shortcuts import cast
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -67,7 +67,7 @@ def get_card():
 def save_card():
     card=request.form['card']
     dict_card=ast.literal_eval(card)
-    model=Boards.select().where(cast(Boards.id,'int')==dict_card['id']).get()
+    model=Boards.select().where(Boards.id==dict_card['id']).get()
     model.cards +=dict_card['cards'] + "|"
     model.save()
     return json.dumps({"status":"OK"})
