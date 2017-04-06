@@ -341,10 +341,12 @@ $(document).ready(function () {
     
 
     //$('#li1').live('click', divClicked);
-    //$('#li1').live('click', createTextareaInsteadListItem);
+    //
     var main = function () {
+
         $('#task_table').hide();
         boardLoader();
+        $('#li1').live('click', createTextareaInsteadListItem);
 
     };
 
