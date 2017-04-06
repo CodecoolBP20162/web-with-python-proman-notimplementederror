@@ -344,7 +344,7 @@ $(document).ready(function () {
 
         $('#task_table').hide();
         boardLoader();
-        //$('#li1').live('click', createTextareaInsteadListItem);
+        $('#li1').live('click', createTextareaInsteadListItem);
 
     };
 
