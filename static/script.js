@@ -87,8 +87,9 @@ $(document).ready(function () {
         $('[id^="bc"]').live('click', function () {
             obj_id = this.id.toString();
             obj_id = obj_id.substr(2);
-            for (var i = 0; i < local_obj.length; i++) {
-                if (local_obj[i].id.toString() === obj_id) {
+            cards=task.get_card(obj_id);
+            //for (var i = 0; i < cards.cards.length; i++) {
+                if (cards.id.toString() === obj_id) {
                     if (click) {
                         $('#back_layer').addClass('show_bl');
                         $('back_layer').css('opacity', '0');
@@ -96,11 +97,12 @@ $(document).ready(function () {
                         $('#taskTitle').empty();
                         $('#stat_new').empty();
                         $('#taskTitle').append($('' +
-                            '<h1>' + local_obj[i].title + '</h1>' +
+                            '<h1>' + cards.title + '</h1>' +
                             '<button id="card_add" class="' + obj_id + '">Create Card!</button>' +
                             '<input type="text" id="card_text" placeholder="Task title" >'));
-                        if(local_obj[i].cards!=""){
-                        var card_splitter=local_obj[i].cards.split('|')
+                        if(cards.cards!=""){
+                        var card_splitter=cards.cards.split('|')
+                        console.log(card_splitter)
                         for (var j = 0; j < card_splitter.length-1; j++) {
                             row = JSON.parse(card_splitter[j]);
                             fillTaskListByStatus(row.status, row.title)
@@ -111,7 +113,7 @@ $(document).ready(function () {
                         $('#back_layer').removeClass('show_bl');
                     }
                 }
-            }
+
             click = !click;
         });
 
@@ -273,9 +275,11 @@ $(document).ready(function () {
                                         '<p id=title>' + response[i].title + '</p>' +
                                 '   </div>';
                            $(strng).appendTo(".row");
+                           console.log(local_obj);
 
-                           local_obj.push(response[i]);
-                           count_id++;
+                               local_obj.push(response[i]);
+                               count_id++;
+
                        }
                        
                        

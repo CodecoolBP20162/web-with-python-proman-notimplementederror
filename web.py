@@ -38,9 +38,11 @@ def create_board():
     x=request.form['id']
     x = ast.literal_eval(x)
     strng=Boards.select()
+
     x_id=x['id']
     for i in strng:
-        if x_id in strng:
+
+        if x_id ==i.id:
             x_id=str(int(x['id'])+1)
     Boards.create(id=x_id,title=x['title'],cards='')
     return json.dumps({'status':'OK'})
@@ -66,7 +68,7 @@ def save_card():
     card=request.form['card']
     dict_card=ast.literal_eval(card)
     model=Boards.select().where(Boards.id==dict_card['id']).get()
-    model.cards +=dict_card['cards'] + "|"
+    model.cards =dict_card['cards'] + "|"
     model.save()
     return json.dumps({"status":"OK"})
 
