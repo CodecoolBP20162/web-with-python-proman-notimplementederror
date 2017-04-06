@@ -13,7 +13,7 @@ class BaseModel(Model):
 class Boards(BaseModel):
     id=IntegerField()
     title=CharField()
-    cards=CharField()
+    cards=TextField()
 
 
 if 'HEROKU' in os.environ:
