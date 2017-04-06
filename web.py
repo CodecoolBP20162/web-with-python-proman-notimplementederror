@@ -3,8 +3,6 @@ import os
 import psycopg2
 import ast
 from conn import db_proxy,Boards
-import conn
-#from playhouse.shortcuts import cast
 
 app = Flask(__name__)
 app.config.from_object(__name__)

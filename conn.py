@@ -11,7 +11,7 @@ class BaseModel(Model):
         database = db_proxy
 
 class Boards(BaseModel):
-    id=CharField()
+    id=IntegerField()
     title=CharField()
     cards=CharField()
 

@@ -60,6 +60,20 @@ $(document).ready(function () {
         $('#newboard-button').click(function (event) {
             event.preventDefault();
             board.createBoard();
+            $.ajax({
+                url:"/",
+                type:"GET",
+                success:function (response) {
+                    console.log("Nice!")
+
+                },
+                error:function () {
+                    console.log("Not nice!")
+
+                }
+            });
+
+            $('#input_fields').hide();
         });
 
 
@@ -75,7 +89,7 @@ $(document).ready(function () {
             obj_id = obj_id.substr(2);
             for (var i = 0; i < local_obj.length; i++) {
                 if (local_obj[i].id.toString() === obj_id) {
-                    if (!click) {
+                    if (click) {
                         $('#back_layer').addClass('show_bl');
                         $('back_layer').css('opacity', '0');
                         $('.ui-state-default').empty();
@@ -85,10 +99,12 @@ $(document).ready(function () {
                             '<h1>' + local_obj[i].title + '</h1>' +
                             '<button id="card_add" class="' + obj_id + '">Create Card!</button>' +
                             '<input type="text" id="card_text" placeholder="Task title" >'));
+                        if(local_obj[i].cards!=""){
                         var card_splitter=local_obj[i].cards.split('|')
                         for (var j = 0; j < card_splitter.length-1; j++) {
                             row = JSON.parse(card_splitter[j]);
                             fillTaskListByStatus(row.status, row.title)
+                        }
                         }
 
                     } else {
@@ -136,10 +152,11 @@ $(document).ready(function () {
         $(document).click(function () {
             if (click) {
                 if (this.id != '#task_table') {
-                    $("#task_table").show();
+                    $('#task_table').hide();
+
                 }
             } else {
-                $('#task_table').hide();
+                $("#task_table").show();
 
 
 
@@ -314,7 +331,7 @@ $(document).ready(function () {
         connectWith: ".connectedSortable",
         receive: function(event, ui) {
             console.log(ui);
-            ui.item.text('Dropped into '+ this.id.substr(5));   // changes the dropped card's text
+            //ui.item.text('Dropped into '+ this.id.substr(5));   // changes the dropped card's text
     }
     });
     
