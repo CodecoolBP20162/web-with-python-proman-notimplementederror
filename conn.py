@@ -36,5 +36,6 @@ else:
 
 
 db_proxy.connect()
-db_proxy.drop_tables([Boards,Tasks])
+if Tasks.table_exists() and Boards.table_exists():
+    db_proxy.drop_tables([Boards,Tasks])
 db_proxy.create_tables([Boards,Tasks], safe=True)
