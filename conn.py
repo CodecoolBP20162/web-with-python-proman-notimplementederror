@@ -16,13 +16,6 @@ class Boards(BaseModel):
     cards=CharField()
 
 
-class Tasks(BaseModel):
-    id=CharField()
-    title=CharField()
-    status=CharField()
-
-
-
 if 'HEROKU' in os.environ:
     import urllib.parse, psycopg2
     urllib.parse.uses_netloc.append('postgres')
@@ -36,6 +29,6 @@ else:
 
 
 db_proxy.connect()
-if Tasks.table_exists() and Boards.table_exists():
-    db_proxy.drop_tables([Boards,Tasks])
-db_proxy.create_tables([Boards,Tasks], safe=True)
+if  Boards.table_exists():
+    db_proxy.drop_tables([Boards])
+db_proxy.create_tables([Boards], safe=True)

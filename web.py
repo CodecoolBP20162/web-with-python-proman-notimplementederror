@@ -2,7 +2,7 @@ from flask import Flask, request, g, redirect, url_for, render_template, session
 import os
 import psycopg2
 import ast
-from conn import db_proxy,Boards,Tasks
+from conn import db_proxy,Boards
 import conn
 
 app = Flask(__name__)
